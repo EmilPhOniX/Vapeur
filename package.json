@@ -1,0 +1,20 @@
+{
+  "name": "vapeur",
+  "version": "0.1.0",
+  "description": "readme temp a compplété pour le rendu",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "de Robert de Bousquet Emilien - Nathanaël Seitz",
+  "license": "ISC",
+  "dependencies": {
+    "@prisma/client": "^6.0.0",
+    "express": "^4.21.1",
+    "hbs": "^4.2.0",
+    "nodemon": "^3.1.7",
+    "prisma": "^6.0.0",
+    "sqlite3": "^5.1.7"
+  }
+}
