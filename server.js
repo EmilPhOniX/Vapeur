@@ -17,7 +17,7 @@ app.set("views", path.join(__dirname, "views")); // On définit le dossier des v
 hbs.registerPartials(path.join(__dirname, "views", "partials")); // On définit le dossier des partials (composants e.g. header, footer, menu...)
 
 // Middleware pour parser les données entrantes
-app.use(express.static("public")); // On définit le dossier des fichiers statiques (css, js, images...)
+app.use(express.static(path.join(__dirname, "public"))); // On définit le dossier des fichiers statiques (css, js, images...)
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
 

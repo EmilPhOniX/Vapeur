@@ -31,4 +31,24 @@
 
     <h2>Créer un jeu</h2>
     {{> newgame}}
+
+    <script>
+        document.addEventListener("DOMContentLoaded", function() {
+        const headers = document.querySelectorAll("h2");
+        //rend cliquable les h2
+
+        headers.forEach(header => {
+                header.addEventListener("click", function() {
+                    const ul = this.nextElementSibling;
+                    //prend le prochain élément après le h2
+                    if (ul && ul.tagName === "UL") {
+                    //si le prochain élément est une liste
+                        ul.classList.toggle("expanded");
+                        // appelle l'expanded du css pour modifier l'affichage
+                    }
+                    event.stopPropagation();
+                });
+            });
+        });
+    </script>
 </body>
