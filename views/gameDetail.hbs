@@ -1,0 +1,24 @@
+<h1>Détails du jeu</h1>
+
+{{#if editMode}}
+    {{> gameDetailEditable}}
+{{else}}
+    {{> gameDetail}}
+{{/if}}
+
+<div class="edit">
+    <!-- cliquer sur l'image active l'edit mode-->
+    <img src="/images/edit-icon.png" alt="Edit" class="edit" onclick="editMode = true">
+</div>
+
+<!-- Bouton pour changer de mode -->
+<script>
+    const editButton = document.querySelector(".edit img");
+    editButton.addEventListener("click", () => {
+        const isEditMode = new URLSearchParams(window.location.search).get("edit") === "true";
+        const newMode = isEditMode ? "false" : "true";
+        window.location.search = `?edit=${newMode}`;
+    });
+</script>
+
+<a href="/">Retour à la liste</a>

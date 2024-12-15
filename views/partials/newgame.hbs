@@ -11,16 +11,16 @@
     <label for="genre">Genre :</label>
     <select id="genre" name="genre" required>
         {{#each genres}}
-            <option value="{{this.idGenre}}">{{this.genre}}</option>
+            <option value="{{this.genre}}">{{this.genre}}</option>
+        {{/each}}
+    </select>
+
+    <select id="editeur" name="editeur" required>
+        {{#each publishers}}
+            <option value="{{this.editeur}}">{{this.editeur}}</option>
         {{/each}}
     </select><br>
 
-    <label for="editeur">Éditeur :</label>
-    <select id="editeur" name="editeur" required>
-        {{#each publishers}}
-            <option value="{{this.id}}">{{this.editeur}}</option>
-        {{/each}}
-    </select><br>
 
     <label for="isFeatured">Mis en avant :</label>
     <input type="checkbox" id="isFeatured" name="isFeatured"><br>

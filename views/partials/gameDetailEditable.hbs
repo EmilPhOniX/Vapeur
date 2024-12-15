@@ -1,0 +1,36 @@
+<form action="/games/${id}/update" method="post">
+                <label for="titre">Titre :</label>
+                <input type="text" id="titre" name="title" value="${game.title}" required><br>
+
+                <label for="releasedate">Date de sortie :</label>
+                <input type="date" id="releasedate" name="releaseDate" value="${formattedDate}" required><br>
+
+                <label for="description">Description :</label>
+                <textarea id="description" name="description" required>${game.description}</textarea><br>
+
+                <label for="genre">Genre :</label>
+                <select id="genre" name="genreId" required>
+                    ${genres
+                        .map(
+                            (genre) =>
+                                `<option value="${genre.idGenre}" ${
+                                    genre.idGenre === game.genreId ? "selected" : ""
+                                }>${genre.genre}</option>`
+                        )
+                        .join("")}
+                </select><br>
+
+                <label for="editeur">Éditeur :</label>
+                <select id="editeur" name="editeurId" required>
+                    ${publishers
+                        .map(
+                            (publisher) =>
+                                `<option value="${publisher.id}" ${
+                                    publisher.id === game.editeurId ? "selected" : ""
+                                }>${publisher.editeur}</option>`
+                        )
+                        .join("")}
+                </select><br>
+
+                <button type="submit">Modifier</button>
+            </form>
