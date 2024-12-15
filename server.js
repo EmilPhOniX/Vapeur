@@ -31,7 +31,9 @@ app.get("/", async (req, res) => {
     // on passe seulement le nom du fichier .hbs sans l'extention.
     // Le chemin est relatif au dossier `views`.
     // On peut aller chercher des templates dans les sous-dossiers (e.g. `movies/details`).
-    res.render("index");
+    const genres = await prisma.genreDeJeux.findMany();
+    const publishers = await prisma.editeursDeJeux.findMany();
+    res.render("index", { genres });
 });
 
 // Route pour ajouter un jeu
