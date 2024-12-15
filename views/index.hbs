@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" href="/public/css/global.css"> 
+    <title>Accueil</title>
+</head>
+<body>
+    <h1>Accueil</h1>
+
+    <h2>Jeux mis en avant</h2>
+    <ul>
+        {{#each featuredGames}}
+            <li><a href="/games/{{this.id}}">{{this.title}}</a></li>
+        {{/each}}
+    </ul>
+
+    <h2>Liste de tous les jeux</h2>
+    <ul>
+        {{#each games}}
+            <li><a href="/games/{{this.id}}">{{this.title}}</a></li>
+        {{/each}}
+    </ul>
+
+    <h2>Liste des genres</h2>
+    <ul>
+        {{#each genres}}
+            <li><a href="/genres/{{this.idGenre}}">{{this.genre}}</a></li>
+        {{/each}}
+    </ul>
+
+    <h2>Liste des éditeurs</h2>
+    <ul>
+        {{#each publishers}}
+            <li><a href="/publishers/{{this.id}}">{{this.editeur}}</a></li>
+        {{/each}}
+    </ul>
+
+    <h2>Créer un jeu</h2>
+    {{> newgame}}
+
+    {{> footer}}
+</body>
+</html>

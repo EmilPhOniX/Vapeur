@@ -33,3 +33,42 @@ app.get("/", async (req, res) => {
     // On peut aller chercher des templates dans les sous-dossiers (e.g. `movies/details`).
     res.render("index");
 });
+
+// Route pour ajouter un jeu
+app.post("/games", async (req, res) => {
+    const { title, description, releaseDate, genreId, editeurId } = req.body;
+    await prisma.jeux.create({
+        data: {
+            title,
+            description,
+            releaseDate: new Date(releaseDate),
+            genreId: parseInt(genreId),
+            editeurId: parseInt(editeurId)
+        }
+    });
+    res.redirect("/");
+});
+
+//Route mour modifier les infos d'un jeu
+app.post("/games/:id/update", async (req, res) => {
+    const { title, description, releaseDate, genreId, editeurId } = req.body;
+    await prisma.jeux.update({
+        where: { id: parseInt(req.params.id) },
+        data: {
+            title,
+            description,
+            releaseDate: new Date(releaseDate),
+            genreId: parseInt(genreId),
+            editeurId: parseInt(editeurId)
+        }
+    });
+    res.redirect(`/games/${req.params.id}`);
+});
+
+//Route pour supprimer un jeu de la liste
+app.post("/games/:id/delete", async (req, res) => {
+    await prisma.jeux.delete({
+        where: { id: parseInt(req.params.id) }
+    });
+    res.redirect("/");
+});
