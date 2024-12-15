@@ -5,30 +5,46 @@
     <ul>
 
     </ul>
+    <div class="CRUD">
+        <div class="afficher">
+        <h2>Liste de tous les jeux</h2>
+            <ul>
+                {{#each games}}
+                    <li>
+                        <a href="/games/{{this.id}}/detail">{{this.title}}</a>
+                    </li>
+                {{/each}}
+            </ul>
+        </div>
+        
+        <div class="ajouter">
+            <h2>Ajouter un jeu</h2>
+            {{> newgame}}
+        </div>
+    </div>
+    
+    <div class="CRUD">
+        <div class="afficher">
+            <h2>Liste des éditeurs</h2>
+            <ul>
+                {{#each publishers}}
+                    <li><a href="/publishers/{{this.id}}">{{this.editeur}}</a></li>
+                {{/each}}
+            </ul>
+        </div>
 
-    <h2>Liste de tous les jeux</h2>
-    <ul>
-        {{#each games}}
-            <li>
-                <a href="/games/{{this.id}}/detail">{{this.title}}</a>
-            </li>
-        {{/each}}
-    </ul>
+        <div class="ajouter">
+            <h2>Ajouter un editeur</h2>
+            {{> newpublisher}}
+        </div>
+    </div>
 
-    <h2>Liste des genres</h2>
-    <ul>
-        {{#each genres}}
-            <li><a href="/genres/{{this.idGenre}}">{{this.genre}}</a></li>
-        {{/each}}
-    </ul>
-
-    <h2>Liste des éditeurs</h2>
-    <ul>
-        {{#each publishers}}
-            <li><a href="/publishers/{{this.id}}">{{this.editeur}}</a></li>
-        {{/each}}
-    </ul>
-
-    <h2>Créer un jeu</h2>
-    {{> newgame}}
+    <div class="genres">
+        <h2>Liste des genres</h2>
+        <ul>
+            {{#each genres}}
+                <li><a href="/genres/{{this.idGenre}}">{{this.genre}}</a></li>
+            {{/each}}
+        </ul>
+    </div>    
 </body>

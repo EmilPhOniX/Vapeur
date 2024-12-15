@@ -21,9 +21,7 @@ app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
 
 // Démarrage du serveur
-app.listen(PORT, () => {
-    console.log(`Server is running on http://localhost:${PORT}`);
-});
+app.listen(PORT, () => { console.log(`Server is running on http://localhost:${PORT}`); });
 
 /*-------------------------------------------------------------------------------------------*/
 /*---------------------------------------Routes Index----------------------------------------*/
