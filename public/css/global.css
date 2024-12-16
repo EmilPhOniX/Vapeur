@@ -14,7 +14,7 @@ header {
     position: fixed;
     top: 0;
     width: 100%;
-    background-color: rgba(0, 0, 0, 0.8);
+    background-color: rgba(0, 0, 0, 0.945);
     padding: 10px 0;
     z-index: 1000;
 }
@@ -32,7 +32,7 @@ main {
     align-items: center;
 }
 
-ul {
+.afficher > ul {
     list-style-type: none;
     padding: 0;
     margin: 0;
@@ -45,11 +45,16 @@ ul.expanded {
     max-height: 500px; /* Ajustez cette valeur en fonction de la taille de votre contenu */
 }
 
+ul.expanded:hover {
+    transform: scale(1.05);
+}
+
+
 li {
     margin: 10px 0;
 }
 
-a {
+/* a {
     text-decoration: none;
     color: white;
     display: block;
@@ -61,8 +66,34 @@ a {
 a:hover {
     background-color: rgba(255, 255, 255, 0.2);
     transform: scale(1.05);
+} */
+
+<<<<<<< Updated upstream
+=======
+.CRUD {
+    display: flex;
+    justify-content: center;
 }
 
+.CRUD ul {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.afficher, .ajouter {
+    margin-top: -10px;
+    margin-bottom: -10px;
+    margin: 10px;
+}
+
+.ajouter > form {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+>>>>>>> Stashed changes
 form {
     background-color: rgba(255, 255, 255, 0.1);
     padding: 20px;
@@ -115,4 +146,20 @@ button {
 button:hover {
     background-color: rgba(255, 255, 255, 0.8);
     transform: scale(1.05);
+}
+
+header .logo {
+    position: absolute;
+    top: 10px; 
+    left: 10px; 
+    width: 90px;
+    height: auto;
+    transition: transform 0.3s;
+}
+
+header .logo:hover {
+    position: absolute;
+    top: 10px; 
+    left: 10px; 
+    transform: scale(1.5);
 }

@@ -15,19 +15,35 @@
         {{/each}}
     </ul>
 
+<<<<<<< Updated upstream
     <h2>Liste des genres</h2>
     <ul>
         {{#each genres}}
             <li><a href="/genres/{{this.idGenre}}">{{this.genre}}</a></li>
         {{/each}}
     </ul>
+=======
+    
+    <div class="genres">
+        <div class="afficher">
+        <h2>Liste des genres</h2>
+        <ul>
+            {{#each genres}}
+                <li><a href="/genres/{{this.idGenre}}">{{this.genre}}</a></li>
+            {{/each}}
+        </ul>
+        </div>   
+    </div> 
+>>>>>>> Stashed changes
 
+    <div class="afficher">
     <h2>Liste des éditeurs</h2>
     <ul>
         {{#each publishers}}
             <li><a href="/publishers/{{this.id}}">{{this.editeur}}</a></li>
         {{/each}}
     </ul>
+    </div>
 
     <h2>Créer un jeu</h2>
     {{> newgame}}
