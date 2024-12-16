@@ -229,20 +229,65 @@ app.get("/genres/:id", async (req, res) => {
 /*-------------------------------------------------------------------------------------------*/
 
 // Route CREATE pour ajouter un éditeur
+app.post("/publishers", async (req, res) => {
+    const { name } = req.body;
+    await prisma.editeursDeJeux.create({
+        data: { editeur: name }
+    });
+    res.redirect("/");
+});
 
 // Route READ pour afficher un éditeur
+app.get("/publishers/:id", async (req, res) => {
+    const publisher = await prisma.editeursDeJeux.findUnique({
+        where: { id: parseInt(req.params.id) },
+        include: { jeux: true }
+    });
+    res.render("publisher", { publisher });
+});
 
 // Route READ/UPDATE pour afficher un formulaire de modification
+app.get("/publishers/:id/edit", async (req, res) => {
+    const publisher = await prisma.editeursDeJeux.findUnique({
+        where: { id: parseInt(req.params.id) }
+    });
+    res.render("editPublisher", { publisher });
+});
 
 // Route UPDATE pour modifier un éditeur
+app.post("/publishers/:id", async (req, res) => {
+    const { name } = req.body;
+    await prisma.editeursDeJeux.update({
+        where: { id: parseInt(req.params.id) },
+        data: { editeur: name }
+    });
+    res.redirect(`/publishers/${req.params.id}`);
+});
 
 // Route DELETE pour supprimer un éditeur
+app.post("/publishers/:id/delete", async (req, res) => {
+    await prisma.editeursDeJeux.delete({
+        where: { id: parseInt(req.params.id) }
+    });
+    res.redirect("/");
+});
 
 /*-------------------------------------------------------------------------------------------*/
 /*---------------------------------Routes Gestions d'erreurs---------------------------------*/
 /*-------------------------------------------------------------------------------------------*/
 
+// Route pour la page 404
+app.get("/404", (req, res) => {
+    res.status(404).render("404");
+});
+
 // Route 404 redirigeant vers la page d'erreur
-app.use((req, res) => {
-    res.status(404).render("404", { message: "Page introuvable" });
+app.use((req, res, next) => {
+    res.status(404).render("404");
+});
+
+// Route 500 pour gérer les erreurs serveur
+app.use((err, req, res, next) => {
+    console.error(err.stack);
+    res.status(500).render("500", { message: "Une erreur serveur est survenue." });
 });
