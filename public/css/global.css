@@ -1,5 +1,5 @@
 body {
-    background: linear-gradient(to right, grey, red);
+    background: linear-gradient(to right, rgba(255, 0, 0, 0.6), grey, grey, rgba(255, 0, 0, 0.295));
     font-family: Arial, sans-serif;
     margin: 0;
     padding: 0;
@@ -10,14 +10,39 @@ body {
     min-height: 100vh;
 }
 
+header {
+    position: fixed;
+    top: 0;
+    width: 100%;
+    background-color: rgba(0, 0, 0, 0.8);
+    padding: 10px 0;
+    z-index: 1000;
+}
+
 h1, h2 {
     color: white;
     text-align: center;
+    cursor: pointer; 
+}
+main {
+    margin-top: 100px;
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
 }
 
 ul {
     list-style-type: none;
     padding: 0;
+    margin: 0;
+    max-height: 0;
+    overflow: hidden;
+    transition: max-height 0.3s ease-out;
+}
+
+ul.expanded {
+    max-height: 500px; /* Ajustez cette valeur en fonction de la taille de votre contenu */
 }
 
 li {
@@ -59,4 +84,57 @@ a:hover {
     display: flex;
     flex-direction: column;
     justify-content: center;
+}
+form {
+    background-color: rgba(255, 255, 255, 0.1);
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    width: 300px;
+    margin: 20px 0;
+}
+
+label {
+    color: white;
+    display: block;
+    margin-bottom: 5px;
+}
+
+
+input[type="text"],
+input[type="date"],
+textarea,
+select {
+    width: 100%;
+    padding: 10px;
+    margin-bottom: 10px;
+    border: none;
+    border-radius: 8px;
+    box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
+}
+input[type="text"]:hover ,
+input[type="date"]:hover ,
+textarea:hover ,
+select:hover {
+background-color: rgba(0, 0, 0, 0.418);
+}
+
+
+input[type="checkbox"] {
+    margin-right: 10px;
+}
+
+button {
+    background-color: white;
+    color: grey;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s, transform 0.3s;
+}
+
+button:hover {
+    background-color: rgba(255, 255, 255, 0.8);
+    transform: scale(1.05);
 }
