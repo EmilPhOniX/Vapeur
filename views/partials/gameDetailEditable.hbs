@@ -1,36 +1,35 @@
-<form action="/games/${id}/update" method="post">
-    <label for="titre">Titre :</label>
-    <input type="text" id="titre" name="title" value="${game.title}" required><br>
+<form action="/games/{{game.id}}/update" method="post">
+    <!-- Titre -->
+    <label for="title">Titre :</label>
+    <input type="text" id="title" name="title" value="{{game.title}}" required><br>
 
-    <label for="releasedate">Date de sortie :</label>
-    <input type="date" id="releasedate" name="releaseDate" value="${formattedDate}" required><br>
+    <!-- Date de sortie -->
+    <label for="releaseDate">Date de sortie :</label>
+    <input type="date" id="releaseDate" name="releaseDate" value="{{formattedDate}}" required><br>
 
+    <!-- Description -->
     <label for="description">Description :</label>
-    <textarea id="description" name="description" required>${game.description}</textarea><br>
+    <textarea id="description" name="description" required>{{game.description}}</textarea><br>
 
+    <!-- Genre -->
     <label for="genre">Genre :</label>
-    <select id="genre" name="genreId" required>
-        ${genres
-            .map(
-                (genre) =>
-                    `<option value="${genre.idGenre}" ${
-                        genre.idGenre === game.genreId ? "selected" : ""
-                    }>${genre.genre}</option>`
-            )
-            .join("")}
-    </select><br>
+    <input type="text" id="genre" name="genre" value="{{game.genre.genre}}" required><br>
 
+    <!-- Éditeur -->
     <label for="editeur">Éditeur :</label>
     <select id="editeur" name="editeurId" required>
-        ${publishers
-            .map(
-                (publisher) =>
-                    `<option value="${publisher.id}" ${
-                        publisher.id === game.editeurId ? "selected" : ""
-                    }>${publisher.editeur}</option>`
-            )
-            .join("")}
+        {{#each publishers}}
+            <option value="{{this.id}}" 
+                {{#if (eq this.id ../game.editeurId)}}selected{{/if}}>
+                {{this.nom}}
+            </option>
+        {{/each}}
     </select><br>
 
+    <!-- Développeur -->
+    <label for="developer">Développeur :</label>
+    <input type="text" id="developer" name="developer" value="{{game.developer}}" required><br>
+
+    <!-- Bouton de soumission -->
     <button type="submit">Modifier</button>
 </form>

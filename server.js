@@ -20,6 +20,9 @@ app.use(express.static(path.join(__dirname, "public"))); // On définit le dossi
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
 
+// Helper pour comparer deux valeurs
+hbs.registerHelper("eq", (a, b) => a === b);
+
 // Démarrage du serveur
 app.listen(PORT, () => { console.log(`Server is running on http://localhost:${PORT}`); });
 
@@ -116,25 +119,69 @@ app.get("/games/:id/detail", async (req, res) => {
     }
 });
 
-// Route READ/UPDATE pour afficher un formulaire de modification
+// Route pour afficher la page d'édition
 app.get("/games/:id/edit", async (req, res) => {
-    
+    const gameId = parseInt(req.params.id);
+
+    try {
+        // Récupérer les données du jeu
+        const game = await prisma.jeux.findUnique({
+            where: { id: gameId },
+            include: { editeur: true, genre: true }, // Inclure les relations si nécessaire
+        });
+
+        // Récupérer les éditeurs (pour la liste déroulante)
+        const publishers = await prisma.editeur.findMany();
+
+        if (!game) {
+            return res.status(404).render("404", { message: "Jeu introuvable" });
+        }
+
+        // Formatage de la date pour l'input date
+        const formattedDate = game.releaseDate.toISOString().split("T")[0];
+
+        // Rendre la vue avec les données nécessaires
+        res.render("gamedetaileditable", {
+            game,
+            publishers,
+            formattedDate,
+        });
+    } catch (error) {
+        console.error("Erreur lors de la récupération du jeu :", error);
+        res.status(500).send("Une erreur est survenue.");
+    }
 });
 
 // Route UPDATE pour modifier un jeu
 app.post("/games/:id/update", async (req, res) => {
-    const { title, description, releaseDate, genreId, editeurId } = req.body;
-    await prisma.jeux.update({
-        where: { id: parseInt(req.params.id) },
-        data: {
-            title,
-            description,
-            releaseDate: new Date(releaseDate),
-            genreId: parseInt(genreId),
-            editeurId: parseInt(editeurId)
+    const gameId = parseInt(req.params.id);
+    try {
+        // Récupérer les données du jeu
+        const game = await prisma.jeux.findUnique({
+            where: { id: gameId },
+            include: { editeur: true, genre: true }, // Inclure les relations si nécessaire
+        });
+
+        // Récupérer les éditeurs (pour la liste déroulante)
+        const publishers = await prisma.editeur.findMany();
+
+        if (!game) {
+            return res.status(404).render("404", { message: "Jeu introuvable" });
         }
-    });
-    res.redirect(`/games/${req.params.id}`);
+
+        // Formatage de la date pour l'input date
+        const formattedDate = game.releaseDate.toISOString().split("T")[0];
+
+        // Rendre la vue avec les données nécessaires
+        res.render("gamedetaileditable", {
+            game,
+            publishers,
+            formattedDate,
+        });
+    } catch (error) {
+        console.error("Erreur lors de la récupération du jeu :", error);
+        res.status(500).send("Une erreur est survenue.");
+    }    
 });
 
 // Route DELETE pour supprimer un jeu
@@ -179,3 +226,12 @@ app.get("/genres/:id", async (req, res) => {
 // Route UPDATE pour modifier un éditeur
 
 // Route DELETE pour supprimer un éditeur
+
+/*-------------------------------------------------------------------------------------------*/
+/*---------------------------------Routes Gestions d'erreurs---------------------------------*/
+/*-------------------------------------------------------------------------------------------*/
+
+// Route 404 redirigeant vers la page d'erreur
+app.use((req, res) => {
+    res.redirect("/404");
+});
