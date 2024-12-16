@@ -1,5 +1,6 @@
 const express = require("express");
 const hbs = require("hbs");
+const dateFormat = require('handlebars-dateformat'); // Importation de Handlebars-dateformat
 
 // Importation de Prisma
 const { PrismaClient } = require("@prisma/client");
@@ -20,8 +21,9 @@ app.use(express.static(path.join(__dirname, "public"))); // On définit le dossi
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
 
-// Helper pour comparer deux valeurs
-hbs.registerHelper("eq", (a, b) => a === b);
+// Helpers Handlebars
+hbs.registerHelper("eq", (a, b) => a === b); // Helper pour comparer des valeurs
+hbs.registerHelper('dateFormat', dateFormat); // Helper pour formater les dates
 
 // Démarrage du serveur
 app.listen(PORT, () => { console.log(`Server is running on http://localhost:${PORT}`); });
@@ -92,27 +94,32 @@ app.get("/games/:id", async (req, res) => {
         where: { id: parseInt(req.params.id) },
         include: { genre: true, editeur: true },
     });
-
-    if (!jeu) { return res.status(404).send("Jeu introuvable"); }
-    res.render("game", { jeu });
+    
+    // Si le jeu n'existe pas, on renvoie vers la page 404
+    if (!jeu) {
+        return res.status(404).render("404", { message: "Jeu introuvable" });
+    }
 });
 
 // Route READ détaillée pour afficher un jeu dans ma liste
 app.get("/games/:id/detail", async (req, res) => {
-    const editMode = req.query.edit === "true"; // Activer le mode édition si "edit=true"
-
     try {
         const jeu = await prisma.jeux.findUnique({
             where: { id: parseInt(req.params.id) },
             include: { genre: true, editeur: true },
         });
 
-        if (!jeu) {
-            return res.status(404).render("404", { message: "Jeu introuvable" });
-        }
+        //Les dates
+        const releaseDateFormatted = jeu.releaseDate.toISOString().split("T")[0]; // Formatage de la date pour l'input date (YYYY-MM-DD)
+        const releaseDateFormattedString = new Date(jeu.releaseDate).toLocaleDateString("fr-FR", { year: "numeric", month: "long", day: "numeric" }); // Autre formatage de la date Jour Mois Année pour l'affichage
 
-        // Passer la variable editMode à la vue
-        res.render("gameDetail", { jeu, editMode });
+        //Datas récupérées pour les réutiliser dans la vue
+        const genres = await prisma.genreDeJeux.findMany(); //Les genres récupérés
+        const editeurs = await prisma.editeursDeJeux.findMany(); //Les éditeurs récupérés
+
+        // Passer toutes les variables nécessaires à la vue
+        res.render("gameDetail", { jeu, releaseDateFormatted, releaseDateFormattedString, genres, editeurs });
+
     } catch (error) {
         console.error("Erreur lors de la récupération du jeu :", error);
         res.status(500).send("Une erreur est survenue.");
@@ -186,11 +193,15 @@ app.post("/games/:id/update", async (req, res) => {
 
 // Route DELETE pour supprimer un jeu
 app.post("/games/:id/delete", async (req, res) => {
-    await prisma.jeux.delete({
-        where: { id: parseInt(req.params.id) }
-    });
-    res.status(204).send();
-    res.redirect("/");
+    try {
+        await prisma.jeux.delete({
+            where: { id: parseInt(req.params.id) }
+        });
+        res.redirect("/");
+    } catch (error) {
+        console.error("Erreur lors de la suppression du jeu :", error);
+        res.status(500).send("Une erreur est survenue lors de la suppression du jeu.");
+    }
 });
 
 /*-------------------------------------------------------------------------------------------*/
@@ -207,7 +218,7 @@ app.get("/genres", async (req, res) => {
 // Route READ pour afficher un genre
 app.get("/genres/:id", async (req, res) => {
     const genre = await prisma.genreDeJeux.findUnique({
-        where: { id: parseInt(req.params.id) },
+        where: { id: parseInt(req.params.idGenre) },
         include: { jeux: true }
     });
     res.render("genre", { genre });
@@ -233,5 +244,5 @@ app.get("/genres/:id", async (req, res) => {
 
 // Route 404 redirigeant vers la page d'erreur
 app.use((req, res) => {
-    res.redirect("/404");
+    res.status(404).render("404", { message: "Page introuvable" });
 });

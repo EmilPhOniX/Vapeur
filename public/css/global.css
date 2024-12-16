@@ -1,4 +1,4 @@
-body {
+/* body {
     background: linear-gradient(to right, rgba(255, 0, 0, 0.6), grey, grey, rgba(255, 0, 0, 0.295));
     font-family: Arial, sans-serif;
     margin: 0;
@@ -24,6 +24,7 @@ h1, h2 {
     text-align: center;
     cursor: pointer; 
 }
+
 main {
     margin-top: 100px;
     padding: 20px;
@@ -34,14 +35,11 @@ main {
 
 ul {
     list-style-type: none;
-    padding: 0;
-    margin: 0;
-    max-height: 0;
     transition: max-height 0.3s ease-out;
 }
 
 ul.expanded {
-    max-height: 500px; /* Ajustez cette valeur en fonction de la taille de votre contenu */
+    max-height: 500px;
 }
 
 li {
@@ -84,7 +82,17 @@ a:hover {
     flex-direction: column;
     justify-content: center;
 }
+
 form {
+    background-color: rgba(255, 255, 255, 0.1);
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    width: 300px;
+    margin: 20px 0;
+}
+
+.gamedetails {
     background-color: rgba(255, 255, 255, 0.1);
     padding: 20px;
     border-radius: 10px;
@@ -98,7 +106,6 @@ label {
     display: block;
     margin-bottom: 5px;
 }
-
 
 input[type="text"],
 input[type="date"],
@@ -136,4 +143,4 @@ button {
 button:hover {
     background-color: rgba(255, 255, 255, 0.8);
     transform: scale(1.05);
-}
+} */
