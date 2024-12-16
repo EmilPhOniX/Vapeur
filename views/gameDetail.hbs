@@ -11,51 +11,55 @@
 </div>
 
 <div class="gamedetailseditable" id="gameDetailsEditable" style="display: none;">
-    <form action="/games/{{jeu.id}}/update" method="post">
+    <form action="/games/{{jeu.id}}/update" method="POST">
         <!-- Titre -->
         <label for="</form>title">Titre :</label>
         <input type="text" id="title" name="title" value="{{jeu.title}}" required><br>
+
+        <!-- Description -->
+        <label for="description">Description :</label>
+        <textarea id="description" name="description" required>{{jeu.description}}</textarea><br>
 
         <!-- Date de sortie -->
         <!-- /!\ La date n'est pas bonne format a trouver -->
         <label for="releaseDate">Date de sortie :</label>
         <input type="date" id="releaseDate" name="releaseDate" value="{{releaseDateFormatted}}" required><br>
 
-        <!-- Description -->
-        <label for="description">Description :</label>
-        <textarea id="description" name="description" required>{{jeu.description}}</textarea><br>
-
         <!-- Genre -->
-        <label for="genre">Genre :</label>        
+        <label for="genre">Genre :</label>
         <select id="genre" name="genre" required>
             {{#each genres}}
-                <option value="{{this.idGenre}}" {{#if (eq this.idGenre ../jeu.genre.idGenre)}}selected{{/if}}>
+                <option value="{{this.genre}}" {{#if (eq this.idGenre ../jeu.genre.idGenre)}}selected{{/if}}>
                     {{this.genre}}
                 </option>
             {{/each}}
         </select><br>
 
-
         <!-- Éditeur -->
         <label for="editeur">Éditeur :</label>
-        <select id="editeur" name="editeurId" required>
+        <select id="editeur" name="editeur" required>
             {{#each editeurs}}
-                <option value="{{this.id}}" {{#if (eq this.id ../jeu.editeur.idEditeur)}}selected{{/if}}>
+                <option value="{{this.editeur}}" {{#if (eq this.idEditeur ../jeu.editeur.idEditeur)}}selected{{/if}}>
                     {{this.editeur}}
                 </option>
             {{/each}}
         </select><br>
+
 
         <!-- Bouton de soumission -->
         <button type="submit">Modifier</button>
     </form>
 </div>
 
+
 <div class="edit"> <img src="/images/edit-icon.png" alt="Edit" class="edit" style="width: 100px; height: 100px; cursor: pointer;"> </div>
+<div class="delete"> <img src="/images/delete-icon.png" alt="Delete" class="delete" style="width: 100px; height: 100px; cursor: pointer;"> </div>
 
 <!-- Bouton pour changer de mode -->
 <script>
     const editButton = document.querySelector('.edit img');
+    const deleteButton = document.querySelector('.delete img');
+
     const gameDetails = document.getElementById('gameDetails');
     const gameDetailsEditable = document.getElementById('gameDetailsEditable');
     let editMode = false;
@@ -68,6 +72,14 @@
         } else {
             gameDetails.style.display = 'block';
             gameDetailsEditable.style.display = 'none';
+        }
+    });
+
+    deleteButton.addEventListener('click', () => {
+        //demande de confirmer la suppression
+        if (confirm("Voulez-vous vraiment supprimer ce jeu ?")) {
+            //redirection vers la page de suppression
+            window.location.href = "/games/{{jeu.id}}/delete";
         }
     });
 </script>

@@ -77,7 +77,7 @@ app.post("/games", async (req, res) => {
                 description: description.trim(),
                 releaseDate: new Date(releaseDate),
                 genreId: genreRecord.idGenre, // Utilisation de l'ID du genre trouvé
-                editeurId: editeurRecord.id, // Utilisation de l'ID de l'éditeur trouvé
+                editeurId: editeurRecord.idEditeur, // Utilisation de l'ID de l'éditeur trouvé
             },
         });
 
@@ -126,81 +126,57 @@ app.get("/games/:id/detail", async (req, res) => {
     }
 });
 
-// Route pour afficher la page d'édition
-app.get("/games/:id/edit", async (req, res) => {
-    const gameId = parseInt(req.params.id);
-
+// Route UPDATE pour modifier un jeu
+app.post("/games/:id/update", async (req, res) => {
     try {
-        // Récupérer les données du jeu
-        const game = await prisma.jeux.findUnique({
+        const gameId = parseInt(req.params.id);
+        const { title, description, releaseDate, genre, editeur } = req.body;
+
+        // Recherche du genre par son nom
+        const genreRecord = await prisma.genreDeJeux.findFirst({
+            where: { genre: genre.trim() }, // Suppression des espaces inutiles
+        });
+
+        if (!genreRecord) { return res.status(400).send(`Le genre "${genre}" est introuvable.`); }
+
+        // Recherche de l'éditeur par son nom
+        const editeurRecord = await prisma.editeursDeJeux.findFirst({
+            where: { editeur: editeur.trim() }, // Suppression des espaces inutiles
+        });
+
+        if (!editeurRecord) { return res.status(400).send(`L'éditeur "${editeur}" est introuvable.`); }
+
+        // Mise à jour du jeu dans la base
+        await prisma.jeux.update({
             where: { id: gameId },
-            include: { editeur: true, genre: true }, // Inclure les relations si nécessaire
+            data: {
+                title: title.trim(),
+                description: description.trim(),
+                releaseDate: new Date(releaseDate),
+                genreId: genreRecord.idGenre, // Utilisation de l'ID du genre trouvé
+                editeurId: editeurRecord.idEditeur, // Utilisation de l'ID de l'éditeur trouvé
+            },
         });
 
-        // Récupérer les éditeurs (pour la liste déroulante)
-        const publishers = await prisma.editeur.findMany();
-
-        if (!game) {
-            return res.status(404).render("404", { message: "Jeu introuvable" });
-        }
-
-        // Formatage de la date pour l'input date
-        const formattedDate = game.releaseDate.toISOString().split("T")[0];
-
-        // Rendre la vue avec les données nécessaires
-        res.render("gamedetaileditable", {
-            game,
-            publishers,
-            formattedDate,
-        });
+        res.redirect(`/games/${gameId}/detail`);
     } catch (error) {
-        console.error("Erreur lors de la récupération du jeu :", error);
+        console.error("Erreur lors de la mise à jour du jeu :", error);
         res.status(500).send("Une erreur est survenue.");
     }
 });
 
-// Route UPDATE pour modifier un jeu
-app.post("/games/:id/update", async (req, res) => {
-    const gameId = parseInt(req.params.id);
-    try {
-        // Récupérer les données du jeu
-        const game = await prisma.jeux.findUnique({
-            where: { id: gameId },
-            include: { editeur: true, genre: true }, // Inclure les relations si nécessaire
-        });
-
-        // Récupérer les éditeurs (pour la liste déroulante)
-        const publishers = await prisma.editeur.findMany();
-
-        if (!game) {
-            return res.status(404).render("404", { message: "Jeu introuvable" });
-        }
-
-        // Formatage de la date pour l'input date
-        const formattedDate = game.releaseDate.toISOString().split("T")[0];
-
-        // Rendre la vue avec les données nécessaires
-        res.render("gamedetaileditable", {
-            game,
-            publishers,
-            formattedDate,
-        });
-    } catch (error) {
-        console.error("Erreur lors de la récupération du jeu :", error);
-        res.status(500).send("Une erreur est survenue.");
-    }    
-});
-
 // Route DELETE pour supprimer un jeu
-app.post("/games/:id/delete", async (req, res) => {
+app.get("/games/:id/delete", async (req, res) => {
     try {
-        await prisma.jeux.delete({
-            where: { id: parseInt(req.params.id) }
+        const gameId = parseInt(req.params.id);
+        const deletedGame = await prisma.jeux.delete({
+            where: { id: gameId },
         });
+        // Rediriger vers la page d'accueil
         res.redirect("/");
     } catch (error) {
         console.error("Erreur lors de la suppression du jeu :", error);
-        res.status(500).send("Une erreur est survenue lors de la suppression du jeu.");
+        res.status(500).send("Une erreur est survenue.");
     }
 });
 

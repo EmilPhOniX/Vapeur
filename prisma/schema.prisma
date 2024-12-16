@@ -21,7 +21,7 @@ model Jeux {
   genreId        Int
   genre          GenreDeJeux @relation(fields: [genreId], references: [idGenre])
   editeurId      Int
-  editeur        EditeursDeJeux @relation(fields: [editeurId], references: [id]) 
+  editeur        EditeursDeJeux @relation(fields: [editeurId], references: [idEditeur]) 
 }                            
                                    
 model GenreDeJeux {           
@@ -31,7 +31,7 @@ model GenreDeJeux {
 }
 
 model EditeursDeJeux {
-  id             Int         @id @default(autoincrement())
+  idEditeur      Int     @id @default(autoincrement())
   editeur        String
   jeux           Jeux[]
 }
