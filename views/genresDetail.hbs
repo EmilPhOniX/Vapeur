@@ -1,0 +1,9 @@
+<body>
+        <ul>
+            {{#each genre.jeux}}
+                <li>
+                    <a href="/games/{{this.id}}">{{this.title}}</a>
+                </li>
+            {{/each}}
+        </ul>
+</body>

@@ -13,9 +13,25 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
-model Task {
-  id        Int      @id @default(autoincrement())
-  title     String
-  isDone    Boolean  @default(false)
-  createdAt DateTime @default(now())
+model Jeux {
+  id          Int           @id @default(autoincrement())
+  title       String
+  description String
+  releaseDate DateTime      @default(now())
+  genreId     Int
+  genre       GenreDeJeux   @relation(fields: [genreId], references: [idGenre])
+  editeurId   Int
+  editeur     EditeursDeJeux @relation(fields: [editeurId], references: [idEditeur], onDelete: Cascade) // Ajout de "onDelete: Cascade"
+}                        
+                                   
+model GenreDeJeux {           
+  idGenre             Int         @id @default(autoincrement())
+  genre          String
+  jeux           Jeux[]
+}
+
+model EditeursDeJeux {
+  idEditeur      Int     @id @default(autoincrement())
+  editeur        String
+  jeux           Jeux[] 
 }

@@ -1,0 +1,75 @@
+<body>
+    <h1>Accueil</h1>
+
+    <h2>Jeux mis en avant</h2>
+    <ul>
+        {{#each (sort games 'title')}}
+            <li>
+                <a href="/games/{{this.id}}/detail">{{this.title}}</a>
+            </li>
+        {{/each}}
+    </ul>
+    <div class="CRUD">
+        <div class="afficher">
+        <h2>Liste de tous les jeux</h2>
+            <ul>
+                {{#each games}}
+                    <li>
+                        <a href="/games/{{this.id}}/detail">{{this.title}}</a>
+                    </li>
+                {{/each}}
+            </ul>
+        </div>
+        
+        <div class="ajouter">
+            <h2>Ajouter un jeu</h2>
+            {{> newgame}}
+        </div>
+    </div>
+    
+    <div class="CRUD">
+        <div class="afficher">
+            <h2>Liste des éditeurs</h2>
+            <ul>
+                {{#each publishers}}
+                    <li><a href="/publishers/{{this.idEditeur}}/detail">{{this.editeur}}</a></li>
+                {{/each}}
+            </ul>
+        </div>
+
+        <div class="ajouter">
+            <h2>Ajouter un editeur</h2>
+            {{> newpublisher}}
+        </div>
+    </div>
+
+    <div class="genres">
+        <h2>Liste des genres</h2>
+        <ul>
+             {{#each genres}}
+                <li><a href="/genres/{{this.idGenre}}/detail">{{this.genre}}</a></li>
+             {{/each}}
+        </ul>
+    </div>    
+
+
+    <script>
+        document.addEventListener("DOMContentLoaded", function() {
+        const headers = document.querySelectorAll("h2");
+        //rend cliquable les h2
+
+        headers.forEach(header => {
+                header.addEventListener("click", function() {
+                    const ul = this.nextElementSibling;
+                    //prend le prochain élément après le h2
+                    if (ul && ul.tagName === "UL") {
+                    //si le prochain élément est une liste
+                        ul.classList.toggle("expanded");
+                        // appelle l'expanded du css pour modifier l'affichage
+                    }
+                    event.stopPropagation();
+                });
+            });
+        });
+    </script>
+</body>
