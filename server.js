@@ -101,7 +101,7 @@ app.get("/games/:id", async (req, res) => {
     }
 });
 
-// Route READ détaillée pour afficher un jeu dans ma liste
+// Route READ détaillée pour afficher un jeu
 app.get("/games/:id/detail", async (req, res) => {
     try {
         const jeu = await prisma.jeux.findUnique({
@@ -205,12 +205,23 @@ app.get("/genres/:id", async (req, res) => {
 /*-------------------------------------------------------------------------------------------*/
 
 // Route CREATE pour ajouter un éditeur
-app.post("/publishers", async (req, res) => {
-    const { name } = req.body;
-    await prisma.editeursDeJeux.create({
-        data: { editeur: name }
-    });
-    res.redirect("/");
+app.post("/publisher", async (req, res) => {
+    try {
+        const { editeur } = req.body; // Utilisez le nom correspondant au champ du formulaire
+
+        if (!editeur || editeur.trim() === "") {
+            return res.status(400).send("Le champ 'Editeur' est requis.");
+        }
+
+        await prisma.editeursDeJeux.create({
+            data: { editeur: editeur.trim() } // Ajout avec nettoyage des espaces
+        });
+
+        res.redirect("/");
+    } catch (error) {
+        console.error("Erreur lors de la création de l'éditeur :", error);
+        res.status(500).send("Une erreur est survenue lors de l'ajout de l'éditeur.");
+    }
 });
 
 // Route READ pour afficher un éditeur
@@ -222,12 +233,18 @@ app.get("/publishers/:id", async (req, res) => {
     res.render("publisher", { publisher });
 });
 
-// Route READ/UPDATE pour afficher un formulaire de modification
-app.get("/publishers/:id/edit", async (req, res) => {
-    const publisher = await prisma.editeursDeJeux.findUnique({
-        where: { id: parseInt(req.params.id) }
-    });
-    res.render("editPublisher", { publisher });
+// Route READ détaillée pour afficher un éditeur
+app.get("/publishers/:id/detail", async (req, res) => {
+    try {
+        const editeur = await prisma.EditeursDeJeux.findUnique({
+            where: { id: parseInt(req.params.id) },
+            include: { jeux: true },
+        });
+
+    } catch (error) {
+        console.error("Erreur lors de la récupération du jeu :", error);
+        res.status(500).send("Une erreur est survenue.");
+    }
 });
 
 // Route UPDATE pour modifier un éditeur

@@ -1,0 +1,21 @@
+<h1>Détails de l'Éditeur</h1>
+
+<div class="publisherDetails" id="publisherDetails">
+    <h2>{{publisher.editeur}}</h2>
+    <ul>
+        <li>Nombre de jeux publiés : {{publisher.jeux.length}}</li><br>
+    </ul>
+
+    <h3>Liste des jeux publiés</h3>
+    <ul>
+        {{#each publisher.jeux}}
+            <li>
+                <a href="/games/{{this.id}}">{{this.title}}</a> <!-- Lien vers la page du jeu -->
+            </li>
+        {{else}}
+            <li>Aucun jeu trouvé pour cet éditeur.</li>
+        {{/each}}
+    </ul>
+</div>
+
+<a href="/">Retour à la liste</a>
