@@ -1,5 +1,6 @@
 const express = require("express");
 const hbs = require("hbs");
+const router = express.Router();
 const dateFormat = require('handlebars-dateformat'); // Importation de Handlebars-dateformat
 
 // Importation de Prisma
@@ -34,6 +35,27 @@ hbs.registerHelper('sort', (array, key) => {
         return 0;
     });
 });
+
+//mélangeur
+router.get('/', async (req, res) => {
+    try {
+        // Récupérer tous les jeux
+        const allGames = await prisma.game.findMany();
+
+        // Mélanger les jeux et en sélectionner trois aléatoirement
+        const shuffledGames = allGames.sort(() => 0.5 - Math.random()).slice(0, 3);
+
+        res.render('index', {
+            games: allGames,
+            randomGames: shuffledGames
+        });
+    } catch (error) {
+        console.error(error);
+        res.status(500).send('Erreur du serveur');
+    }
+});
+
+module.exports = router;
 
 // Démarrage du serveur
 app.listen(PORT, () => { console.log(`Server is running on http://localhost:${PORT}`); });

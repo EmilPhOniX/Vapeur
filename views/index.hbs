@@ -2,11 +2,16 @@
     <h1 id="main-title">Accueil</h1>
 
 
-    <!-- Affiche lex jeux mis en avant -->
+    <!-- Affiche les jeux mis en avant -->
     <div class="afficher">
         <h2 class="section-title">Jeux mis en avant</h2>
             <ul id="featured-games">
-            
+                {{!-- Fonctionnalité non implémentée --}}
+            {{#each randomGames}}
+                <li>
+                    <a href="/games/{{this.id}}/detail" class="boutonsliste">{{this.title}}</a>
+                </li>
+            {{/each}}
             </ul>
     </div>
 
@@ -59,6 +64,7 @@
 
     <!-- Script pour afficher les détails de la bdd on click -->
     <script>
+        
         document.addEventListener("DOMContentLoaded", function() {
             const headers = document.querySelectorAll(".section-title");
             // Rend cliquables les h2
