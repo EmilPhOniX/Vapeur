@@ -20,7 +20,7 @@ Pour commencer avec le projet, executez les commandes suivantes :
     ```
 
 2. Crée l'environnement de base de donnée ! 
-    ````bash
+    ```bash
     echo 'DATABASE_URL="file:./TO_BE_REPLACED"' > .env
     ```
 
