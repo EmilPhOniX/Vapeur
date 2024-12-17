@@ -1,22 +1,46 @@
-/* body {
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box; 
+}
+
+body {
     background: linear-gradient(to right, rgba(255, 0, 0, 0.6), grey, grey, rgba(255, 0, 0, 0.295));
     font-family: Arial, sans-serif;
     margin: 0;
     padding: 0;
     display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    min-height: 100vh;
+    flex-direction: column; /* Organise les enfants (header, main, footer) en colonne */
+    align-items: center; /* Centre les enfants horizontalement */
+    min-height: 100vh; /* Prend toute la hauteur de l'écran */
+    box-sizing: border-box;
 }
 
+/* Header et Footer fixes avec centrage */
 header {
     position: fixed;
     top: 0;
+    left: 0;
     width: 100%;
+    height: 10%;
     background-color: rgba(0, 0, 0, 0.8);
-    padding: 10px 0;
-    z-index: 1000;
+    color: white;
+    text-align: center;
+    line-height: 10vh; /* Centre verticalement le contenu du header */
+    z-index: 10; /* Assure que le header est au-dessus */
+}
+
+footer {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    height: 10%;
+    background-color: rgba(0, 0, 0, 0.8);
+    color: white;
+    text-align: center;
+    line-height: 10vh; /* Centre verticalement le contenu du footer */
+    z-index: 10; /* Assure que le footer est au-dessus */
 }
 
 h1, h2 {
@@ -35,6 +59,9 @@ main {
 
 ul {
     list-style-type: none;
+    padding: 0;
+    margin: 0;
+    max-height: 0;
     transition: max-height 0.3s ease-out;
 }
 
@@ -72,9 +99,43 @@ a:hover {
 }
 
 .afficher, .ajouter {
-    margin-top: -10px;
-    margin-bottom: -10px;
-    margin: 10px;
+    margin-top: 20px; 
+    margin-bottom: 20px; 
+    margin-left: 10%;
+    margin-right: 10%;
+    width: 35%; 
+}
+
+.afficher > ul {
+    list-style-type: none;
+    padding: 0;
+    margin: 0;
+    max-height: 0;
+    overflow: hidden;
+    transition: max-height 0.3s ease-out;
+    position: relative;}
+
+.afficher > ul.expanded {
+    max-height: 500px; 
+    text-align: center;
+    overflow-y: hidden;
+}
+
+.afficher > ul.expanded::before {
+    content: ''; /*pseudo élément pour avoir la barre de scroll*/
+    width: 5%;
+    right: 2%;
+    height: 100%;
+    background: rgba(255, 255, 255, 0.1); 
+    overflow-y: auto;
+}
+
+.afficher > ul.expanded li {
+    border: 1px solid white;
+    padding: 10px;
+    margin: 5px 0;
+    border-radius: 5px;
+    transition: border 0.3s ease-in-out;
 }
 
 .ajouter > form {
@@ -82,7 +143,6 @@ a:hover {
     flex-direction: column;
     justify-content: center;
 }
-
 form {
     background-color: rgba(255, 255, 255, 0.1);
     padding: 20px;
@@ -143,4 +203,37 @@ button {
 button:hover {
     background-color: rgba(255, 255, 255, 0.8);
     transform: scale(1.05);
-} */
+}
+
+
+/* Styles pour la classe .game-detail */
+.game-detail {
+    background-color: rgba(0, 0, 0, 0.7);
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+    width: 60%; /* Taille désirée */
+    max-width: 1200px; /* Largeur maximale */
+    height: 50%; /* Hauteur ajustée */
+    overflow-y: auto; /* Défilement si nécessaire */
+    padding: 20px;
+    box-sizing: border-box;
+    list-style: none;
+    margin: 0 auto; /* Centre horizontalement */
+}
+
+/* Contenu interne */
+.game-detail p, 
+.game-detail li {
+    color: #ddd;
+    font-size: 1rem;
+    margin: 10px 0;
+    line-height: 1.6; 
+    text-align: justify;
+}
+
+.game-detail h2 {
+    margin-bottom: 20px;
+    font-size: 1.8rem; 
+    color: #fff;
+    text-align: center;
+}
