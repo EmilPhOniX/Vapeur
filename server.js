@@ -268,22 +268,38 @@ app.get("/publishers/:id/detail", async (req, res) => {
 });
 
 // Route UPDATE pour modifier un éditeur
-app.post("/publishers/:id", async (req, res) => {
-    const { name } = req.body;
-    await prisma.editeursDeJeux.update({
-        where: { id: parseInt(req.params.id) },
-        data: { editeur: name }
-    });
-    res.redirect(`/publishers/${req.params.id}`);
+app.post("/publishers/:id/update", async (req, res) => {
+    try {
+        const publisherId = parseInt(req.params.id);
+        const { editeur } = req.body;
+
+        if (!editeur || editeur.trim() === "") {
+            return res.status(400).send("Le champ 'Editeur' est requis.");
+        }
+
+        // Mise à jour de l'éditeur dans la base
+        await prisma.editeursDeJeux.update({
+            where: { idEditeur: publisherId },
+            data: { editeur: editeur.trim() },
+        });
+
+        res.redirect(`/publishers/${publisherId}/detail`);
+    } catch (error) {
+        console.error("Erreur lors de la mise à jour de l'éditeur :", error);
+        res.status(500).send("Une erreur est survenue.");
+    }
 });
 
 // Route DELETE pour supprimer un éditeur
 app.get("/publishers/:id/delete", async (req, res) => {
     try {
         const publisherId = parseInt(req.params.id);
+
+        // Utiliser le bon nom de champ pour la clé primaire
         const deletedPublisher = await prisma.editeursDeJeux.delete({
-            where: { id: publisherId },
+            where: { idEditeur: publisherId },
         });
+
         // Rediriger vers la page d'accueil
         res.redirect("/");
     } catch (error) {

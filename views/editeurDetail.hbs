@@ -10,15 +10,16 @@
 </div>
 
 <div class="editordetailseditable" id="editorDetailsEditable" style="display: none;">
-    <form action="/editors/{{editeur.id}}/update" method="POST">
+    <form action="/publishers/{{editeur.idEditeur}}/update" method="POST">
         <!-- Nom de l'éditeur -->
-        <label for="name">Nom de l'éditeur :</label>
-        <input type="text" id="name" name="name" value="{{editeur.editeur}}" required><br>
+        <label for="editeur">Nom de l'éditeur :</label>
+        <input type="text" id="editeur" name="editeur" value="{{editeur.editeur}}" required><br>
 
         <!-- Bouton de soumission -->
         <button type="submit">Modifier</button>
     </form>
 </div>
+
 
 {{> EditDeleteButtons}}
 
