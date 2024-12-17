@@ -3,7 +3,11 @@
 
     <h2>Jeux mis en avant</h2>
     <ul>
-
+        {{#each (sort games 'title')}}
+            <li>
+                <a href="/games/{{this.id}}/detail">{{this.title}}</a>
+            </li>
+        {{/each}}
     </ul>
     <div class="CRUD">
         <div class="afficher">
@@ -42,9 +46,9 @@
     <div class="genres">
         <h2>Liste des genres</h2>
         <ul>
-            {{#each genres}}
-                <li><a href="/genres/{{this.id}}">{{this.genre}}</a></li>
-            {{/each}}
+             {{#each genres}}
+                    <li><a href="/genres/{{this.idGenre}}/jeux">{{this.genre}}</a></li>
+             {{/each}}
         </ul>
     </div>    
 

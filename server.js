@@ -25,6 +25,15 @@ app.use(express.json());
 hbs.registerHelper("eq", (a, b) => a === b); // Helper pour comparer des valeurs
 hbs.registerHelper('dateFormat', dateFormat); // Helper pour formater les dates
 
+// Helper pour trier les jeux par titre
+hbs.registerHelper('sort', (array, key) => {
+    return array.sort((a, b) => {
+        if (a[key] < b[key]) return -1;
+        if (a[key] > b[key]) return 1;
+        return 0;
+    });
+});
+
 // Démarrage du serveur
 app.listen(PORT, () => { console.log(`Server is running on http://localhost:${PORT}`); });
 
@@ -279,6 +288,47 @@ app.get("/publishers/:id/delete", async (req, res) => {
         res.redirect("/");
     } catch (error) {
         console.error("Erreur lors de la suppression de l'éditeur :", error);
+        res.status(500).send("Une erreur est survenue.");
+    }
+});
+
+
+/*-------------------------------------------------------------------------------------------*/
+/*--------------------------------------Routes genres----------------------------------------*/
+/*-------------------------------------------------------------------------------------------*/
+
+// // Route READ pour afficher la liste des genres
+// app.get("/genres", async (req, res) => {
+//     try {
+//         const genres = await prisma.genreDeJeux.findMany();
+//         res.render("genres", { genres });
+//     } catch (error) {
+//         console.error("Erreur lors de la récupération des genres :", error);
+//         res.status(500).send("Une erreur est survenue.");
+//     }
+// });
+
+// Route READ pour afficher les jeux d'un genre
+app.get("/genres/:idGenre/jeux", async (req, res) => {
+    try {
+        const genreId = parseInt(req.params.idGenre);
+
+        if (isNaN(genreId)) {
+            return res.status(400).send("ID invalide.");
+        }
+
+        const genre = await prisma.genreDeJeux.findUnique({
+            where: { idGenre: genreId },
+            include: { jeux: true },
+        });
+
+        if (!genre) {
+            return res.status(404).send("Genre non trouvé.");
+        }
+
+        res.render("genreJeux", { genre });
+    } catch (error) {
+        console.error("Erreur lors de la récupération des jeux du genre :", error);
         res.status(500).send("Une erreur est survenue.");
     }
 });
