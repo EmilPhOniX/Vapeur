@@ -16,6 +16,7 @@ app.set("view engine", "hbs"); // On définit le moteur de template que Express 
 app.set("views", path.join(__dirname, "views")); // On définit le dossier des vues (dans lequel se trouvent les fichiers .hbs)
 hbs.registerPartials(path.join(__dirname, "views", "partials")); // On définit le dossier des partials (composants e.g. header, footer, menu...)
 
+
 // Middleware pour parser les données entrantes
 app.use(express.static(path.join(__dirname, "public"))); // On définit le dossier des fichiers statiques (css, js, images...)
 app.use(express.urlencoded({ extended: true }));
@@ -189,25 +190,6 @@ app.get("/games/:id/delete", async (req, res) => {
     }
 });
 
-/*-------------------------------------------------------------------------------------------*/
-/*---------------------------------------Routes genres---------------------------------------*/
-/*--------On ne peux que lire les genres, on ne peux pas les modifier ou les supprimer-------*/
-/*-------------------------------------------------------------------------------------------*/
-
-// Route READ pour afficher la liste des genres
-app.get("/genres", async (req, res) => {
-    const genres = await prisma.genreDeJeux.findMany();
-    res.render("genres", { genres });
-});
-
-// Route READ pour afficher un genre
-app.get("/genres/:id", async (req, res) => {
-    const genre = await prisma.genreDeJeux.findUnique({
-        where: { id: parseInt(req.params.idGenre) },
-        include: { jeux: true }
-    });
-    res.render("genre", { genre });
-});
 
 /*-------------------------------------------------------------------------------------------*/
 /*--------------------------------------Routes editeurs--------------------------------------*/
@@ -343,6 +325,21 @@ app.get("/genres/:idGenre/detail", async (req, res) => {
         console.error("Erreur lors de la récupération des jeux du genre :", error);
         res.status(500).send("Une erreur est survenue.");
     }
+});
+
+// Route READ pour afficher un genre
+app.get("/genres/:idGenre", async (req, res) => {
+    const genre = await prisma.genreDeJeux.findUnique({
+        where: { idGenre: parseInt(req.params.idGenre) },
+        include: { jeux: true }
+    });
+    res.render("genre", { genre });
+});
+
+ // Route READ pour afficher la liste des genres
+app.get("/genres", async (req, res) => {
+    const genres = await prisma.genreDeJeux.findMany();
+    res.render("genres", { genres });
 });
 
 /*-------------------------------------------------------------------------------------------*/

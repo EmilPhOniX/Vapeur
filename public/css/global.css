@@ -10,24 +10,34 @@ body {
     margin: 0;
     padding: 0;
     display: flex;
-    flex-direction: column; /* Organise les enfants (header, main, footer) en colonne */
-    align-items: center; /* Centre les enfants horizontalement */
-    min-height: 100vh; /* Prend toute la hauteur de l'écran */
+    flex-direction: column;
+    align-items: center;
+    min-height: 100vh;
     box-sizing: border-box;
 }
 
-/* Header et Footer fixes avec centrage */
 header {
     position: fixed;
     top: 0;
     left: 0;
     width: 100%;
-    height: 10%;
+    height: 10vh;  /* Utilisation de vh pour s'assurer que le header prend toujours 10% de la hauteur de la fenêtre */
     background-color: rgba(0, 0, 0, 0.8);
     color: white;
     text-align: center;
     line-height: 10vh; /* Centre verticalement le contenu du header */
     z-index: 10; /* Assure que le header est au-dessus */
+    display: flex;
+    align-items: center; /* Centrer verticalement les éléments */
+    justify-content: flex-start; /* Aligner les éléments à gauche */
+    padding: 0 20px; /* Ajout de padding pour espacer le contenu du bord */
+}
+
+#logo {
+    margin-right: 20px; /* Espace entre le logo et les autres éléments */
+    position: relative;
+    top: 0; 
+    left: 0;
 }
 
 footer {
@@ -35,7 +45,7 @@ footer {
     bottom: 0;
     left: 0;
     width: 100%;
-    height: 10%;
+    height: 10vh;  /* Utilisation de vh pour s'assurer que le footer prend toujours 10% de la hauteur de la fenêtre */
     background-color: rgba(0, 0, 0, 0.8);
     color: white;
     text-align: center;
@@ -43,18 +53,21 @@ footer {
     z-index: 10; /* Assure que le footer est au-dessus */
 }
 
-h1, h2 {
-    color: white;
-    text-align: center;
-    cursor: pointer; 
-}
-
 main {
-    margin-top: 100px;
+    margin-top: 10vh;  /* Marge supérieure égale à la hauteur du header */
+    margin-bottom: 10vh;  /* Marge inférieure égale à la hauteur du footer */
     padding: 20px;
     display: flex;
     flex-direction: column;
     align-items: center;
+    width: 100%;
+    box-sizing: border-box;
+}
+
+h1, h2 {
+    color: white;
+    text-align: center;
+    cursor: pointer; 
 }
 
 ul {
@@ -82,14 +95,19 @@ a {
     transition: background-color 0.3s, transform 0.3s;
 }
 
-a:hover {
+a:hover:not(#logoliste) {
     background-color: rgba(255, 255, 255, 0.2);
     transform: scale(1.05);
 }
 
+
+
 .CRUD {
     display: flex;
     justify-content: center;
+    flex-wrap: wrap;  /* Permet de faire passer les éléments à la ligne si nécessaire */
+    gap: 20px;  /* Espace entre les éléments */
+    width: 100%;
 }
 
 .CRUD ul {
@@ -99,11 +117,9 @@ a:hover {
 }
 
 .afficher, .ajouter {
-    margin-top: 20px; 
-    margin-bottom: 20px; 
-    margin-left: 10%;
-    margin-right: 10%;
-    width: 35%; 
+    margin-top: 20px;
+    margin-bottom: 20px;
+    width: calc(35% - 20px);  /* Ajustement de la largeur pour tenir compte de l'espace entre les éléments */
 }
 
 .afficher > ul {
@@ -113,16 +129,17 @@ a:hover {
     max-height: 0;
     overflow: hidden;
     transition: max-height 0.3s ease-out;
-    position: relative;}
+    position: relative;
+}
 
 .afficher > ul.expanded {
-    max-height: 500px; 
+    max-height: 500px;
     text-align: center;
     overflow-y: hidden;
 }
 
 .afficher > ul.expanded::before {
-    content: ''; /*pseudo élément pour avoir la barre de scroll*/
+    content: ''; /* Pseudo élément pour avoir la barre de scroll */
     width: 5%;
     right: 2%;
     height: 100%;
@@ -143,6 +160,7 @@ a:hover {
     flex-direction: column;
     justify-content: center;
 }
+
 form {
     background-color: rgba(255, 255, 255, 0.1);
     padding: 20px;
@@ -178,13 +196,13 @@ select {
     border-radius: 8px;
     box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
 }
-input[type="text"]:hover ,
-input[type="date"]:hover ,
-textarea:hover ,
-select:hover {
-background-color: rgba(0, 0, 0, 0.418);
-}
 
+input[type="text"]:hover,
+input[type="date"]:hover,
+textarea:hover,
+select:hover {
+    background-color: rgba(0, 0, 0, 0.418);
+}
 
 input[type="checkbox"] {
     margin-right: 10px;
@@ -205,35 +223,32 @@ button:hover {
     transform: scale(1.05);
 }
 
-
-/* Styles pour la classe .game-detail */
 .game-detail {
     background-color: rgba(0, 0, 0, 0.7);
     border-radius: 10px;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
-    width: 60%; /* Taille désirée */
-    max-width: 1200px; /* Largeur maximale */
-    height: 50%; /* Hauteur ajustée */
-    overflow-y: auto; /* Défilement si nécessaire */
+    width: 60%;
+    max-width: 1200px;
+    height: 50%;
+    overflow-y: auto;
     padding: 20px;
     box-sizing: border-box;
     list-style: none;
-    margin: 0 auto; /* Centre horizontalement */
+    margin: 0 auto;
 }
 
-/* Contenu interne */
-.game-detail p, 
+.game-detail p,
 .game-detail li {
     color: #ddd;
     font-size: 1rem;
     margin: 10px 0;
-    line-height: 1.6; 
+    line-height: 1.6;
     text-align: justify;
 }
 
 .game-detail h2 {
     margin-bottom: 20px;
-    font-size: 1.8rem; 
+    font-size: 1.8rem;
     color: #fff;
     text-align: center;
 }

@@ -1,19 +1,18 @@
 <body>
-    <h1>Accueil</h1>
+    <h1 id="main-title">Accueil</h1>
 
-    <h2>Jeux mis en avant</h2>
-    <ul>
-        {{#each (sort games 'title')}}
-            <li>
-                <a href="/games/{{this.id}}/detail">{{this.title}}</a>
-            </li>
-        {{/each}}
-    </ul>
+    <div class="afficher">
+        <h2 class="section-title">Jeux mis en avant</h2>
+            <ul id="featured-games">
+            
+            </ul>
+    </div>
+
     <div class="CRUD">
-        <div class="afficher">
-        <h2>Liste de tous les jeux</h2>
+        <div class="afficher" id="all-games">
+            <h2 class="section-title">Liste de tous les jeux</h2>
             <ul>
-                {{#each games}}
+                {{#each (sort games 'title')}}
                     <li>
                         <a href="/games/{{this.id}}/detail">{{this.title}}</a>
                     </li>
@@ -21,51 +20,50 @@
             </ul>
         </div>
         
-        <div class="ajouter">
-            <h2>Ajouter un jeu</h2>
+        <div class="ajouter" id="add-game">
+            <h2 class="section-title">Ajouter un jeu</h2>
             {{> newgame}}
         </div>
     </div>
     
     <div class="CRUD">
-        <div class="afficher">
-            <h2>Liste des éditeurs</h2>
+        <div class="afficher" id="all-publishers">
+            <h2 class="section-title">Liste des éditeurs</h2>
             <ul>
-                {{#each publishers}}
+                {{#each (sort publishers 'editeur')}}
                     <li><a href="/publishers/{{this.idEditeur}}/detail">{{this.editeur}}</a></li>
                 {{/each}}
             </ul>
         </div>
 
-        <div class="ajouter">
-            <h2>Ajouter un editeur</h2>
+        <div class="ajouter" id="add-publisher">
+            <h2 class="section-title">Ajouter un éditeur</h2>
             {{> newpublisher}}
         </div>
     </div>
 
-    <div class="genres">
-        <h2>Liste des genres</h2>
-        <ul>
-             {{#each genres}}
+    <div class="afficher">
+        <h2 class="section-title">Liste des genres</h2>
+        <ul id="all-genres">
+            {{#each (sort genres 'genre')}}
                 <li><a href="/genres/{{this.idGenre}}/detail">{{this.genre}}</a></li>
-             {{/each}}
+            {{/each}}
         </ul>
     </div>    
 
-
     <script>
         document.addEventListener("DOMContentLoaded", function() {
-        const headers = document.querySelectorAll("h2");
-        //rend cliquable les h2
+            const headers = document.querySelectorAll(".section-title");
+            // Rend cliquables les h2
 
-        headers.forEach(header => {
+            headers.forEach(header => {
                 header.addEventListener("click", function() {
                     const ul = this.nextElementSibling;
-                    //prend le prochain élément après le h2
+                    // Prend le prochain élément après le h2
                     if (ul && ul.tagName === "UL") {
-                    //si le prochain élément est une liste
+                        // Si le prochain élément est une liste
                         ul.classList.toggle("expanded");
-                        // appelle l'expanded du css pour modifier l'affichage
+                        // Appelle l'expanded du css pour modifier l'affichage
                     }
                     event.stopPropagation();
                 });
