@@ -51,7 +51,53 @@ footer {
     text-align: center;
     line-height: 10vh; /* Centre verticalement le contenu du footer */
     z-index: 10; /* Assure que le footer est au-dessus */
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 20px;
 }
+
+footer .footer-content {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+}
+
+footer .footer-nav {
+    display: flex;
+    justify-content: flex-end;
+    gap: 20px;
+}
+
+footer .footer-nav ul {
+    display: flex;
+    flex-direction: row;
+    list-style: none;
+    gap: 20px;
+}
+
+footer .footer-nav ul li a {
+    color: white;
+    text-decoration: none;
+    display: flex;
+    align-items: center;
+    padding: 5px;
+    border-radius: 5px;
+    transition: background-color 0.3s, transform 0.3s;
+}
+
+footer .footer-nav ul li a:hover {
+    background-color: rgba(255, 255, 255, 0.2);
+    transform: scale(1.05);
+}
+
+footer .footer-nav ul li img {
+    width: 24px;
+    height: 24px;
+    margin-left: 8px;
+}
+
 
 main {
     margin-top: 10vh;  /* Marge supérieure égale à la hauteur du header */
@@ -100,8 +146,16 @@ a:hover:not(#logoliste) {
     transform: scale(1.05);
 }
 
+.boutonsliste {
+    border : 3px solid red;
+    border-radius: 25%;
+}
 
-
+.form-title {
+    color: white;
+    text-align: left;
+    margin-bottom: 20px;
+}
 .CRUD {
     display: flex;
     justify-content: center;
@@ -139,7 +193,6 @@ a:hover:not(#logoliste) {
 }
 
 .afficher > ul.expanded::before {
-    content: ''; /* Pseudo élément pour avoir la barre de scroll */
     width: 5%;
     right: 2%;
     height: 100%;
@@ -147,7 +200,7 @@ a:hover:not(#logoliste) {
     overflow-y: auto;
 }
 
-.afficher > ul.expanded li {
+#all-genres > ul.expanded li {
     border: 1px solid white;
     padding: 10px;
     margin: 5px 0;
@@ -156,7 +209,7 @@ a:hover:not(#logoliste) {
 }
 
 .ajouter > form {
-    display: flex;
+    display: center;
     flex-direction: column;
     justify-content: center;
 }
@@ -168,6 +221,7 @@ form {
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
     width: 300px;
     margin: 20px 0;
+    display: center;
 }
 
 .gamedetails {
@@ -197,12 +251,6 @@ select {
     box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
 }
 
-input[type="text"]:hover,
-input[type="date"]:hover,
-textarea:hover,
-select:hover {
-    background-color: rgba(0, 0, 0, 0.418);
-}
 
 input[type="checkbox"] {
     margin-right: 10px;

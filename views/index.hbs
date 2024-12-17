@@ -1,6 +1,8 @@
 <body>
     <h1 id="main-title">Accueil</h1>
 
+
+    <!-- Affiche lex jeux mis en avant -->
     <div class="afficher">
         <h2 class="section-title">Jeux mis en avant</h2>
             <ul id="featured-games">
@@ -8,49 +10,54 @@
             </ul>
     </div>
 
+    <!-- Affiche les jeux par ordre alpha -->
     <div class="CRUD">
         <div class="afficher" id="all-games">
             <h2 class="section-title">Liste de tous les jeux</h2>
             <ul>
                 {{#each (sort games 'title')}}
                     <li>
-                        <a href="/games/{{this.id}}/detail">{{this.title}}</a>
+                        <a href="/games/{{this.id}}/detail" class="boutonsliste">{{this.title}}</a>
                     </li>
                 {{/each}}
             </ul>
         </div>
         
         <div class="ajouter" id="add-game">
-            <h2 class="section-title">Ajouter un jeu</h2>
+            <h2 class="form-title">Ajouter un jeu</h2>
             {{> newgame}}
         </div>
     </div>
     
+    <!-- Affiche les editeurs par ordre alpha -->
     <div class="CRUD">
         <div class="afficher" id="all-publishers">
             <h2 class="section-title">Liste des éditeurs</h2>
             <ul>
                 {{#each (sort publishers 'editeur')}}
-                    <li><a href="/publishers/{{this.idEditeur}}/detail">{{this.editeur}}</a></li>
+                    <li><a href="/publishers/{{this.idEditeur}}/detail" class="boutonsliste">{{this.editeur}}</a></li>
                 {{/each}}
             </ul>
         </div>
 
         <div class="ajouter" id="add-publisher">
-            <h2 class="section-title">Ajouter un éditeur</h2>
+            <h2 class="form-title">Ajouter un éditeur</h2>
             {{> newpublisher}}
         </div>
     </div>
 
-    <div class="afficher">
+    <!-- Affiche les genres par ordre alpha -->
+    <div class="afficher" id="all-genres">
         <h2 class="section-title">Liste des genres</h2>
-        <ul id="all-genres">
+        <ul>
             {{#each (sort genres 'genre')}}
                 <li><a href="/genres/{{this.idGenre}}/detail">{{this.genre}}</a></li>
             {{/each}}
         </ul>
     </div>    
 
+
+    <!-- Script pour afficher les détails de la bdd on click -->
     <script>
         document.addEventListener("DOMContentLoaded", function() {
             const headers = document.querySelectorAll(".section-title");
