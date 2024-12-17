@@ -19,7 +19,14 @@ Pour commencer avec le projet, executez les commandes suivantes :
     npm install
     ```
 
-2. Exécutez les migrations de la base de données :
+2. Crée l'environnement de base de donnée ! 
+    ````bash
+    echo 'DATABASE_URL="file:./TO_BE_REPLACED"' > .env
+    ```
+
+3. Dans le .env remplacez le "TO_BE_REPLACED" par l'URL de votre base de donnée
+
+4. Exécutez les migrations de la base de  données :
     ```bash
     npx prisma migrate dev --name init
     ```
