@@ -313,19 +313,8 @@ app.get("/publishers/:id/delete", async (req, res) => {
 /*--------------------------------------Routes genres----------------------------------------*/
 /*-------------------------------------------------------------------------------------------*/
 
-// // Route READ pour afficher la liste des genres
-// app.get("/genres", async (req, res) => {
-//     try {
-//         const genres = await prisma.genreDeJeux.findMany();
-//         res.render("genres", { genres });
-//     } catch (error) {
-//         console.error("Erreur lors de la récupération des genres :", error);
-//         res.status(500).send("Une erreur est survenue.");
-//     }
-// });
-
 // Route READ pour afficher les jeux d'un genre
-app.get("/genres/:idGenre/jeux", async (req, res) => {
+app.get("/genres/:idGenre/detail", async (req, res) => {
     try {
         const genreId = parseInt(req.params.idGenre);
 
@@ -333,16 +322,23 @@ app.get("/genres/:idGenre/jeux", async (req, res) => {
             return res.status(400).send("ID invalide.");
         }
 
+        // Récupérer le genre avec ses jeux
         const genre = await prisma.genreDeJeux.findUnique({
             where: { idGenre: genreId },
-            include: { jeux: true },
+            include: {
+                jeux: {
+                    include: {
+                        editeur: true, // Inclure l'éditeur des jeux
+                    },
+                },
+            },
         });
 
         if (!genre) {
-            return res.status(404).send("Genre non trouvé.");
+            return res.status(404).send("Genre introuvable.");
         }
 
-        res.render("genreJeux", { genre });
+        res.render("genresDetail", { genre });
     } catch (error) {
         console.error("Erreur lors de la récupération des jeux du genre :", error);
         res.status(500).send("Une erreur est survenue.");
