@@ -41,6 +41,70 @@ footer {
     text-align: center;
     line-height: 10vh; /* Centre verticalement le contenu du footer */
     z-index: 10; /* Assure que le footer est au-dessus */
+<<<<<<< Updated upstream
+=======
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 20px;
+}
+
+footer .footer-content {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+}
+
+footer .footer-nav {
+    display: flex;
+    justify-content: flex-end;
+}
+
+footer .footer-nav ul {
+    display: flex;
+    flex-direction: row;
+    list-style: none;
+    gap: 20px;
+    
+}
+
+footer .footer-nav ul li a {
+    color: white;
+    text-decoration: none;
+    display: flex; /* Utiliser flexbox pour l'alignement */
+    justify-content: center; /* Centrer horizontalement */
+    align-items: center; /* Centrer verticalement */
+    padding: 5px;
+    border-radius: 5px;
+    transition: background-color 0.3s, transform 0.3s;
+    height: 40px; /* Assure une hauteur cohérente pour les liens */
+}
+
+footer .footer-nav ul li img {
+    width: 30px; /* Taille des icônes */
+    height: 30px;
+    display: block; /* S'assurer qu'elles ne laissent pas d'espace additionnel */
+}
+
+
+footer .footer-nav ul li a:hover {
+    background-color: rgba(255, 255, 255, 0.2);
+    transform: scale(1.05);
+}
+
+
+
+main {
+    margin-top: 10vh;  /* Marge supérieure égale à la hauteur du header */
+    margin-bottom: 10vh;  /* Marge inférieure égale à la hauteur du footer */
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 100%;
+    box-sizing: border-box;
+>>>>>>> Stashed changes
 }
 
 h1, h2 {
