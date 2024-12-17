@@ -10,24 +10,34 @@ body {
     margin: 0;
     padding: 0;
     display: flex;
-    flex-direction: column; /* Organise les enfants (header, main, footer) en colonne */
-    align-items: center; /* Centre les enfants horizontalement */
-    min-height: 100vh; /* Prend toute la hauteur de l'écran */
+    flex-direction: column;
+    align-items: center;
+    min-height: 100vh;
     box-sizing: border-box;
 }
 
-/* Header et Footer fixes avec centrage */
 header {
     position: fixed;
     top: 0;
     left: 0;
     width: 100%;
-    height: 10%;
+    height: 10vh;  /* Utilisation de vh pour s'assurer que le header prend toujours 10% de la hauteur de la fenêtre */
     background-color: rgba(0, 0, 0, 0.8);
     color: white;
     text-align: center;
     line-height: 10vh; /* Centre verticalement le contenu du header */
     z-index: 10; /* Assure que le header est au-dessus */
+    display: flex;
+    align-items: center; /* Centrer verticalement les éléments */
+    justify-content: flex-start; /* Aligner les éléments à gauche */
+    padding: 0 20px; /* Ajout de padding pour espacer le contenu du bord */
+}
+
+#logo {
+    margin-right: 20px; /* Espace entre le logo et les autres éléments */
+    position: relative;
+    top: 0; 
+    left: 0;
 }
 
 footer {
@@ -35,65 +45,13 @@ footer {
     bottom: 0;
     left: 0;
     width: 100%;
-    height: 10%;
+    height: 10vh;  /* Utilisation de vh pour s'assurer que le footer prend toujours 10% de la hauteur de la fenêtre */
     background-color: rgba(0, 0, 0, 0.8);
     color: white;
     text-align: center;
     line-height: 10vh; /* Centre verticalement le contenu du footer */
     z-index: 10; /* Assure que le footer est au-dessus */
-<<<<<<< Updated upstream
-=======
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    padding: 20px;
 }
-
-footer .footer-content {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    width: 100%;
-}
-
-footer .footer-nav {
-    display: flex;
-    justify-content: flex-end;
-}
-
-footer .footer-nav ul {
-    display: flex;
-    flex-direction: row;
-    list-style: none;
-    gap: 20px;
-    
-}
-
-footer .footer-nav ul li a {
-    color: white;
-    text-decoration: none;
-    display: flex; /* Utiliser flexbox pour l'alignement */
-    justify-content: center; /* Centrer horizontalement */
-    align-items: center; /* Centrer verticalement */
-    padding: 5px;
-    border-radius: 5px;
-    transition: background-color 0.3s, transform 0.3s;
-    height: 40px; /* Assure une hauteur cohérente pour les liens */
-}
-
-footer .footer-nav ul li img {
-    width: 30px; /* Taille des icônes */
-    height: 30px;
-    display: block; /* S'assurer qu'elles ne laissent pas d'espace additionnel */
-}
-
-
-footer .footer-nav ul li a:hover {
-    background-color: rgba(255, 255, 255, 0.2);
-    transform: scale(1.05);
-}
-
-
 
 main {
     margin-top: 10vh;  /* Marge supérieure égale à la hauteur du header */
@@ -104,7 +62,6 @@ main {
     align-items: center;
     width: 100%;
     box-sizing: border-box;
->>>>>>> Stashed changes
 }
 
 h1, h2 {
@@ -112,15 +69,9 @@ h1, h2 {
     text-align: center;
     cursor: pointer; 
 }
-main {
-    margin-top: 100px;
-    padding: 20px;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-}
 
 ul {
+    color: white;
     list-style-type: none;
     padding: 0;
     margin: 0;
@@ -129,7 +80,7 @@ ul {
 }
 
 ul.expanded {
-    max-height: 500px; /* Ajustez cette valeur en fonction de la taille de votre contenu */
+    max-height: 500px;
 }
 
 li {
@@ -145,14 +96,19 @@ a {
     transition: background-color 0.3s, transform 0.3s;
 }
 
-a:hover {
+a:hover:not(#logoliste) {
     background-color: rgba(255, 255, 255, 0.2);
     transform: scale(1.05);
 }
 
+
+
 .CRUD {
     display: flex;
     justify-content: center;
+    flex-wrap: wrap;  /* Permet de faire passer les éléments à la ligne si nécessaire */
+    gap: 20px;  /* Espace entre les éléments */
+    width: 100%;
 }
 
 .CRUD ul {
@@ -162,11 +118,9 @@ a:hover {
 }
 
 .afficher, .ajouter {
-    margin-top: 20px; 
-    margin-bottom: 20px; 
-    margin-left: 10%;
-    margin-right: 10%;
-    width: 35%; 
+    margin-top: 20px;
+    margin-bottom: 20px;
+    width: calc(35% - 20px);  /* Ajustement de la largeur pour tenir compte de l'espace entre les éléments */
 }
 
 .afficher > ul {
@@ -176,16 +130,17 @@ a:hover {
     max-height: 0;
     overflow: hidden;
     transition: max-height 0.3s ease-out;
-    position: relative;}
+    position: relative;
+}
 
 .afficher > ul.expanded {
-    max-height: 500px; 
+    max-height: 500px;
     text-align: center;
     overflow-y: hidden;
 }
 
 .afficher > ul.expanded::before {
-    content: ''; /*pseudo élément pour avoir la barre de scroll*/
+    content: ''; /* Pseudo élément pour avoir la barre de scroll */
     width: 5%;
     right: 2%;
     height: 100%;
@@ -206,6 +161,7 @@ a:hover {
     flex-direction: column;
     justify-content: center;
 }
+
 form {
     background-color: rgba(255, 255, 255, 0.1);
     padding: 20px;
@@ -215,12 +171,13 @@ form {
     margin: 20px 0;
 }
 
+
+
 label {
     color: white;
     display: block;
     margin-bottom: 5px;
 }
-
 
 input[type="text"],
 input[type="date"],
@@ -233,13 +190,13 @@ select {
     border-radius: 8px;
     box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
 }
-input[type="text"]:hover ,
-input[type="date"]:hover ,
-textarea:hover ,
-select:hover {
-background-color: rgba(0, 0, 0, 0.418);
-}
 
+input[type="text"]:hover,
+input[type="date"]:hover,
+textarea:hover,
+select:hover {
+    background-color: rgba(0, 0, 0, 0.418);
+}
 
 input[type="checkbox"] {
     margin-right: 10px;
@@ -261,34 +218,133 @@ button:hover {
 }
 
 
-/* Styles pour la classe .game-detail */
-.game-detail {
-    background-color: rgba(0, 0, 0, 0.7);
-    border-radius: 10px;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
-    width: 60%; /* Taille désirée */
-    max-width: 1200px; /* Largeur maximale */
-    height: 50%; /* Hauteur ajustée */
-    overflow-y: auto; /* Défilement si nécessaire */
+
+
+
+
+/* --------------  Game Details Styling --------------------------------------   */
+.gamedetails {
+    background: rgba(255, 255, 255, 0.1);
     padding: 20px;
-    box-sizing: border-box;
+    border-radius: 12px;
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.3);
+    width: 80%;
+    max-width: 800px;
+    max-height: 800px; 
+    min-height: 450px;
+    margin: 20px auto;
+    transition: transform 0.3s ease, box-shadow 0.3s;
+    box-sizing: border-box; 
+}
+
+
+
+.gamedetails:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 12px 30px rgba(0, 0, 0, 0.4);
+}
+
+.gamedetails ul {
     list-style: none;
-    margin: 0 auto; /* Centre horizontalement */
+    padding: 0;
+    margin: 0;
 }
 
-/* Contenu interne */
-.game-detail p, 
-.game-detail li {
-    color: #ddd;
-    font-size: 1rem;
+.gamedetails li {
     margin: 10px 0;
-    line-height: 1.6; 
-    text-align: justify;
+    line-height: 1.6;
+    font-size: 1.1rem;
+    color: #e6e6e6;
 }
 
-.game-detail h2 {
-    margin-bottom: 20px;
-    font-size: 1.8rem; 
-    color: #fff;
-    text-align: center;
+.gamedetails a {
+    color: #ff4646;
+    text-decoration: none;
+    font-weight: bold;
 }
+
+.gamedetails a:hover {
+    text-decoration: underline;
+}
+
+
+
+/* --------------  Editeur Details Styling --------------------------------------   */
+.publisherDetails {
+    background: rgba(255, 255, 255, 0.1);
+    padding: 20px;
+    border-radius: 12px;
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.3);
+    width: 80%;
+    max-width: 800px;
+    max-height: 800px; 
+    min-height: 200px;
+    margin: 20px auto;
+    transition: transform 0.3s ease, box-shadow 0.3s;
+    box-sizing: border-box; 
+}
+
+
+
+.publisherDetails:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 12px 30px rgba(0, 0, 0, 0.4);
+}
+
+.publisherDetails ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.publisherDetails li {
+    margin: 10px 0;
+    line-height: 1.6;
+    font-size: 1.1rem;
+    color: #e6e6e6;
+}
+
+.publisherDetails a {
+    color: #ff4646;
+    text-decoration: none;
+    font-weight: bold;
+}
+
+.publisherDetails a:hover {
+    text-decoration: underline;
+}
+
+/* --------------  Edit & Delete Styling --------------------------------------   */
+
+.edit,
+.delete {
+    display: inline-block; /* Keep them inline */
+    margin: 5px; /* Slight spacing between icons */
+    text-align: left; /* Align contents to the left */
+}
+
+.edit img,
+.delete img {
+    width: 50px; /* Smaller size */
+    height: 50px;
+    cursor: pointer;
+    border-radius: 8px; /* Subtle rounded corners */
+    transition: transform 0.2s ease-in-out, box-shadow 0.2s ease-in-out; /* Smooth hover effects */
+}
+
+.edit img:hover,
+.delete img:hover {
+    transform: scale(1.1); /* Slight zoom on hover */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* Light shadow on hover */
+}
+
+.container {
+    display: flex;
+    align-items: center; /* Center align icons vertically */
+    justify-content: flex-start; /* Align icons to the left */
+    gap: 10px; /* Space between icons */
+    margin: 10px; /* Space around the container */
+}
+
+
+
