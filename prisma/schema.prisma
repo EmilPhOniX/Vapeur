@@ -14,15 +14,15 @@ datasource db {
 }
 
 model Jeux {
-  id             Int         @id @default(autoincrement())
-  title          String      
-  description    String      
-  releaseDate    DateTime    @default(now())
-  genreId        Int
-  genre          GenreDeJeux @relation(fields: [genreId], references: [idGenre])
-  editeurId      Int
-  editeur        EditeursDeJeux @relation(fields: [editeurId], references: [idEditeur]) 
-}                            
+  id          Int           @id @default(autoincrement())
+  title       String
+  description String
+  releaseDate DateTime      @default(now())
+  genreId     Int
+  genre       GenreDeJeux   @relation(fields: [genreId], references: [idGenre])
+  editeurId   Int
+  editeur     EditeursDeJeux @relation(fields: [editeurId], references: [idEditeur], onDelete: Cascade) // Ajout de "onDelete: Cascade"
+}                        
                                    
 model GenreDeJeux {           
   idGenre             Int         @id @default(autoincrement())
@@ -33,5 +33,5 @@ model GenreDeJeux {
 model EditeursDeJeux {
   idEditeur      Int     @id @default(autoincrement())
   editeur        String
-  jeux           Jeux[]
+  jeux           Jeux[] 
 }

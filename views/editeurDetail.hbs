@@ -1,21 +1,54 @@
 <h1>Détails de l'Éditeur</h1>
 
 <div class="publisherDetails" id="publisherDetails">
-    <h2>{{publisher.editeur}}</h2>
+    <h2>{{editeur.editeur}}</h2>
+    <h3>Jeux publiés :</h3>
     <ul>
-        <li>Nombre de jeux publiés : {{publisher.jeux.length}}</li><br>
-    </ul>
-
-    <h3>Liste des jeux publiés</h3>
-    <ul>
-        {{#each publisher.jeux}}
-            <li>
-                <a href="/games/{{this.id}}">{{this.title}}</a> <!-- Lien vers la page du jeu -->
-            </li>
-        {{else}}
-            <li>Aucun jeu trouvé pour cet éditeur.</li>
+        {{#each jeux}}
+            <li><a href="/games/{{this.id}}/detail">{{this.title}}</a></li>
         {{/each}}
-    </ul>
 </div>
+
+<div class="editordetailseditable" id="editorDetailsEditable" style="display: none;">
+    <form action="/editors/{{editeur.id}}/update" method="POST">
+        <!-- Nom de l'éditeur -->
+        <label for="name">Nom de l'éditeur :</label>
+        <input type="text" id="name" name="name" value="{{editeur.editeur}}" required><br>
+
+        <!-- Bouton de soumission -->
+        <button type="submit">Modifier</button>
+    </form>
+</div>
+
+{{> EditDeleteButtons}}
+
+<!-- Bouton pour changer de mode -->
+<script>
+    const editButton = document.querySelector('.edit img');
+    const deleteButton = document.querySelector('.delete img');
+
+    const publisherDetails = document.getElementById('publisherDetails');
+    const editorDetailsEditable = document.getElementById('editorDetailsEditable');
+    let editMode = false;
+
+    editButton.addEventListener('click', () => {
+        editMode = !editMode;
+        if (editMode) {
+            publisherDetails.style.display = 'none';
+            editorDetailsEditable.style.display = 'block';
+        } else {
+            publisherDetails.style.display = 'block';
+            editorDetailsEditable.style.display = 'none';
+        }
+    });
+
+    deleteButton.addEventListener('click', () => {
+        //demande de confirmer la suppression
+        if (confirm("Voulez-vous vraiment supprimer cet éditeur ?")) {
+            //redirection vers la page de suppression
+            window.location.href = "/publishers/{{editeur.idEditeur}}/delete";  
+        }
+    });
+</script>
 
 <a href="/">Retour à la liste</a>

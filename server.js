@@ -236,13 +236,24 @@ app.get("/publishers/:id", async (req, res) => {
 // Route READ détaillée pour afficher un éditeur
 app.get("/publishers/:id/detail", async (req, res) => {
     try {
-        const editeur = await prisma.EditeursDeJeux.findUnique({
-            where: { id: parseInt(req.params.id) },
+        const publisherId = parseInt(req.params.id);
+
+        if (isNaN(publisherId)) {
+            return res.status(400).send("ID invalide.");
+        }
+
+        const editeur = await prisma.editeursDeJeux.findUnique({
+            where: { idEditeur: publisherId }, // Correction ici
             include: { jeux: true },
         });
 
+        if (!editeur) {
+            return res.status(404).send("Éditeur introuvable.");
+        }
+
+        res.render("editeurDetail", { editeur, jeux: editeur.jeux });
     } catch (error) {
-        console.error("Erreur lors de la récupération du jeu :", error);
+        console.error("Erreur lors de la récupération de l'éditeur :", error);
         res.status(500).send("Une erreur est survenue.");
     }
 });
@@ -258,11 +269,18 @@ app.post("/publishers/:id", async (req, res) => {
 });
 
 // Route DELETE pour supprimer un éditeur
-app.post("/publishers/:id/delete", async (req, res) => {
-    await prisma.editeursDeJeux.delete({
-        where: { id: parseInt(req.params.id) }
-    });
-    res.redirect("/");
+app.get("/publishers/:id/delete", async (req, res) => {
+    try {
+        const publisherId = parseInt(req.params.id);
+        const deletedPublisher = await prisma.editeursDeJeux.delete({
+            where: { id: publisherId },
+        });
+        // Rediriger vers la page d'accueil
+        res.redirect("/");
+    } catch (error) {
+        console.error("Erreur lors de la suppression de l'éditeur :", error);
+        res.status(500).send("Une erreur est survenue.");
+    }
 });
 
 /*-------------------------------------------------------------------------------------------*/

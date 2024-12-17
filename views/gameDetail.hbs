@@ -6,7 +6,7 @@
         <li>Description : {{jeu.description}}</li><br>
         <li>Date de sortie : {{releaseDateFormattedString}}</li><br>
         <li>Genre : <a href="/genres/{{jeu.genre.id}}">{{jeu.genre.genre}}</a></li><br>
-        <li>Éditeur : <a href="/publishers/{{jeu.editeur.id}}">{{jeu.editeur.editeur}}</a></li>
+        <li>Éditeur : <a href="/publishers/{{jeu.editeur.idEditeur}}/detail">{{jeu.editeur.editeur}}</a></li><br> 
     </ul>
 </div>
 
@@ -45,15 +45,12 @@
             {{/each}}
         </select><br>
 
-
         <!-- Bouton de soumission -->
         <button type="submit">Modifier</button>
     </form>
 </div>
 
-
-<div class="edit"> <img src="/images/edit-icon.png" alt="Edit" class="edit" style="width: 100px; height: 100px; cursor: pointer;"> </div>
-<div class="delete"> <img src="/images/delete-icon.png" alt="Delete" class="delete" style="width: 100px; height: 100px; cursor: pointer;"> </div>
+{{> EditDeleteButtons}}
 
 <!-- Bouton pour changer de mode -->
 <script>
@@ -79,7 +76,7 @@
         //demande de confirmer la suppression
         if (confirm("Voulez-vous vraiment supprimer ce jeu ?")) {
             //redirection vers la page de suppression
-            window.location.href = "/games/{{jeu.id}}/delete";
+            window.location.href = `/games/{{jeu.id}}/delete`;
         }
     });
 </script>
