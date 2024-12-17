@@ -7,7 +7,7 @@ CREATE TABLE "Jeux" (
     "genreId" INTEGER NOT NULL,
     "editeurId" INTEGER NOT NULL,
     CONSTRAINT "Jeux_genreId_fkey" FOREIGN KEY ("genreId") REFERENCES "GenreDeJeux" ("idGenre") ON DELETE RESTRICT ON UPDATE CASCADE,
-    CONSTRAINT "Jeux_editeurId_fkey" FOREIGN KEY ("editeurId") REFERENCES "EditeursDeJeux" ("id") ON DELETE RESTRICT ON UPDATE CASCADE
+    CONSTRAINT "Jeux_editeurId_fkey" FOREIGN KEY ("editeurId") REFERENCES "EditeursDeJeux" ("idEditeur") ON DELETE CASCADE ON UPDATE CASCADE
 );
 
 -- CreateTable
@@ -18,7 +18,7 @@ CREATE TABLE "GenreDeJeux" (
 
 -- CreateTable
 CREATE TABLE "EditeursDeJeux" (
-    "id" INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT,
+    "idEditeur" INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT,
     "editeur" TEXT NOT NULL
 );
 
