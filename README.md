@@ -12,24 +12,29 @@ Vapeur est une application web développée par **Emilien de Robert de Bousquet*
 
 ## Installation
 
-Pour commencer avec le projet, executez les commandes suivantes :
+* Clonez le repository : 
+```bash
+git clone https://github.com/EmilPhOniX/Vapeur
+```
 
-1. Installez les dépendances :
+Pour commencer avec le projet, exécutez la commande :
+
+* Installez les dépendances :
     ```bash
     npm install
     ```
 
-2. Crée l'environnement de base de donnée ! 
-    ```bash
-    echo 'DATABASE_URL="file:./TO_BE_REPLACED"' > .env
-    ```
+## Le script serveur.js se lance en postinstall
 
-3. Dans le .env remplacez le "TO_BE_REPLACED" par l'URL de votre base de donnée
+**Ce script permet :**
 
-4. Exécutez les migrations de la base de  données :
-    ```bash
-    npx prisma migrate dev --name init
-    ```
+1. D'installer les dépendances
+
+2. La création de l'environnement de variables .env
+
+3. La création de la base de données .db 
+
+4. D'exécuter les migrations de la base de données :
 
 ## Utilisation
 

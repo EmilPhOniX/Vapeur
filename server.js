@@ -1,7 +1,6 @@
 const express = require("express");
 const hbs = require("hbs");
 const router = express.Router();
-const dateFormat = require('handlebars-dateformat'); // Importation de Handlebars-dateformat
 
 // Importation de Prisma
 const { PrismaClient } = require("@prisma/client");
@@ -25,7 +24,6 @@ app.use(express.json());
 
 // Helpers Handlebars
 hbs.registerHelper("eq", (a, b) => a === b); // Helper pour comparer des valeurs
-hbs.registerHelper('dateFormat', dateFormat); // Helper pour formater les dates
 
 // Helper pour trier les jeux par titre
 hbs.registerHelper('sort', (array, key) => {
