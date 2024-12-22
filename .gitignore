@@ -1,5 +1,5 @@
 node_modules
 # Keep environment variables and database out of version control
 .env
-.db
-.db-journal
+*.db
+*.db-journal
