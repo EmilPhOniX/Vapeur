@@ -43,3 +43,6 @@ Pour démarrer l'application, utilisez la commande :
 npm start
 ```
 L'application démarre avec nodemon
+
+Tous droits réservés © 2025 Emilien de Robert de Bousquet et Nathanaël Seitz.
+L’ensemble du code, des ressources et de la conception de cette application sont protégés et ne peuvent être copiés, modifiés ou distribués sans l’autorisation explicite des auteurs.
