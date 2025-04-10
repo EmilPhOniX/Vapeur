@@ -44,5 +44,5 @@ npm start
 ```
 L'application démarre avec nodemon
 
-Tous droits réservés © 2025 Emilien de Robert de Bousquet et Nathanaël Seitz.
-L’ensemble du code, des ressources et de la conception de cette application sont protégés et ne peuvent être copiés, modifiés ou distribués sans l’autorisation explicite des auteurs.
+Tous droits libres © 2025 Emilien de Robert de Bousquet et Nathanaël Seitz.
+Ce projet est open source. Vous êtes libre de l’utiliser, le modifier et le partager comme bon vous semble. La mention des auteurs originaux est fortement appréciée.
