@@ -16,8 +16,7 @@
     "dateformat": "^5.0.3",
     "express": "^4.21.1",
     "hbs": "^4.2.0",
-    "nodemon": "^3.1.9",
-    "sqlite3": "^5.1.7"
+    "nodemon": "^3.1.9"
   },
   "devDependencies": {
     "prisma": "^6.0.1"
