@@ -1,0 +1,38 @@
+<form id="add-game-form" class="form-container" action="/games" method="POST">
+  <div class="form-group">
+    <label for="game-title">Titre du jeu:</label>
+    <input type="text" id="game-title" name="title" required />
+  </div>
+
+  <div class="form-group">
+    <label for="game-description">Description:</label>
+    <textarea id="game-description" name="description" rows="4"></textarea>
+  </div>
+
+  <div class="form-group">
+    <label for="game-genre">Genre:</label>
+    <select id="game-genre" name="genre" required>
+      <option value="">-- Sélectionner un genre --</option>
+      {{#each genres}}
+        <option value="{{this.genre}}">{{this.genre}}</option>
+      {{/each}}
+    </select>
+  </div>
+
+  <div class="form-group">
+    <label for="game-editeur">Éditeur:</label>
+    <select id="game-editeur" name="editeur" required>
+      <option value="">-- Sélectionner un éditeur --</option>
+      {{#each editeurs}}
+        <option value="{{this.editeur}}">{{this.editeur}}</option>
+      {{/each}}
+    </select>
+  </div>
+
+  <div class="form-group">
+    <label for="game-date">Date de sortie:</label>
+    <input type="date" id="game-date" name="releaseDate" />
+  </div>
+
+  <button type="submit" class="btn-submit">Ajouter le jeu</button>
+</form>

@@ -1,7 +1,6 @@
 <body>
     <h1 id="main-title">Accueil</h1>
 
-
     <!-- Affiche les jeux mis en avant -->
     <div class="afficher">
         <h2 class="section-title">Jeux mis en avant</h2>
@@ -39,8 +38,8 @@
         <div class="afficher" id="all-publishers">
             <h2 class="section-title">Liste des éditeurs</h2>
             <ul>
-                {{#each (sort publishers 'editeur')}}
-                    <li><a href="/publishers/{{this.idEditeur}}/detail" class="boutonsliste">{{this.editeur}}</a></li>
+                {{#each (sort editeurs 'editeur')}}
+                    <li><a href="/editeur/{{this.idEditeur}}" class="boutonsliste">{{this.editeur}}</a></li>
                 {{/each}}
             </ul>
         </div>
@@ -61,10 +60,8 @@
         </ul>
     </div>    
 
-
     <!-- Script pour afficher les détails de la bdd on click -->
-    <script>
-        
+    <script>        
         document.addEventListener("DOMContentLoaded", function() {
             const headers = document.querySelectorAll(".section-title");
             // Rend cliquables les h2
