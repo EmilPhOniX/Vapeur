@@ -1,0 +1,60 @@
+services:
+  mysql:
+    image: mysql:8.0
+    container_name: vapeur_mysql
+    restart: always
+    environment:
+      MYSQL_ROOT_PASSWORD: '${DB_ROOT_PASSWORD}'
+      MYSQL_DATABASE: '${DB_NAME}'
+      MYSQL_USER: '${DB_USER}'
+      MYSQL_PASSWORD: '${DB_PASSWORD}'
+    ports:
+      - "${DB_PORT:-3306}:3306"
+    volumes:
+      - mysql_data:/var/lib/mysql
+      - ./init.sql:/docker-entrypoint-initdb.d/init.sql
+    networks:
+      - vapeur_network
+
+  app:
+    build: .
+    container_name: vapeur_app
+    restart: always
+    environment:
+      DB_HOST: mysql
+      DB_PORT: 3306
+      DB_NAME: '${DB_NAME}'
+      DB_USER: '${DB_USER}'
+      DB_PASSWORD: '${DB_PASSWORD}'
+    ports:
+      - "${APP_PORT:-3000}:3000"
+    depends_on:
+      - mysql
+    volumes:
+      - .:/app
+      - /app/node_modules
+    networks:
+      - vapeur_network
+
+  phpmyadmin:
+    image: phpmyadmin:latest
+    container_name: vapeur_phpmyadmin
+    restart: always
+    environment:
+      PMA_HOST: '${PMA_HOST}'
+      PMA_USER: '${DB_USER}'
+      PMA_PASSWORD: '${DB_PASSWORD}'
+    ports:
+      - "${PMA_PORT:-8001}:80"
+    depends_on:
+      - mysql
+    networks:
+      - vapeur_network
+
+volumes:
+  mysql_data:
+
+
+networks:
+  vapeur_network:
+    driver: bridge
