@@ -1,5 +1,4 @@
-<body>
-    <h1 id="main-title">Accueil</h1>
+<h1 id="main-title">Accueil</h1>
 
     <!-- Affiche les jeux mis en avant -->
     <div class="afficher">
@@ -67,7 +66,7 @@
             // Rend cliquables les h2
 
             headers.forEach(header => {
-                header.addEventListener("click", function() {
+                header.addEventListener("click", function(event) {
                     const ul = this.nextElementSibling;
                     // Prend le prochain élément après le h2
                     if (ul && ul.tagName === "UL") {
@@ -80,4 +79,3 @@
             });
         });
     </script>
-</body>
